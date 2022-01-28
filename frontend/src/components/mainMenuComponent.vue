@@ -1,10 +1,12 @@
 <template>
+<div>
   <center>
     <h1>T-rex Multiplayer</h1>
-    <pixelBtn>Host</pixelBtn>
-    <pixelBtn>Join</pixelBtn>
+    <pixelBtn btnText="join" v-on:buttonToMenu="onButtonClick"></pixelBtn>
+    <pixelBtn btnText="host" v-on:buttonToMenu="onButtonClick"></pixelBtn>
   </center>
   <canvas></canvas>
+</div>
 </template>
 
 <script>
@@ -12,8 +14,17 @@ import pixelBtnComponent from './pixelBtnComponent.vue'
 
 export default {
   name: 'mainMenuComponent',
+  data() {
+    return {
+    }
+  },
   components: {
     pixelBtn: pixelBtnComponent,
+  },
+  methods: {
+    onButtonClick(value) {
+      this.$emit("menuToApp", value)
+    }
   }
 }
 </script>
