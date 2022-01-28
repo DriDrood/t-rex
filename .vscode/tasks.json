@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/T-rex.Backend/T-rex.Backend.csproj",
+                "${workspaceFolder}/backend/T-rex.Backend.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/T-rex.Backend/T-rex.Backend.csproj",
+                "${workspaceFolder}/backend/T-rex.Backend.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/T-rex.Backend/T-rex.Backend.csproj"
+                "${workspaceFolder}/backend/T-rex.Backend.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/T-rex.Backend/bin/Debug/net6.0/T-rex.Backend.dll",
+            "program": "${workspaceFolder}/backend/bin/Debug/net6.0/T-rex.Backend.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/T-rex.Backend",
+            "cwd": "${workspaceFolder}/backend",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
