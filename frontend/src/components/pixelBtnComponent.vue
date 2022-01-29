@@ -7,7 +7,6 @@ export default {
   name: 'pixelBtnComponent',
   data() {
     return {
-      text: this.btnText
     }
   },
   props: {

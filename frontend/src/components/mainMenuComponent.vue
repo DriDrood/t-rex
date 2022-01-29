@@ -4,8 +4,10 @@
     <h1>T-rex Multiplayer</h1>
     <pixelBtn btnText="join" v-on:buttonToMenu="onButtonClick"></pixelBtn>
     <pixelBtn btnText="host" v-on:buttonToMenu="onButtonClick"></pixelBtn>
+    <div>
+      <canvas width="600" height="150"></canvas>
+    </div>
   </center>
-  <canvas></canvas>
 </div>
 </template>
 

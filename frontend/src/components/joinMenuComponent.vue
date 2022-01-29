@@ -4,9 +4,13 @@
     <h1>Enter lobby code</h1>
     <div>
       <label for="pixelInput" v-if="codeInvalid">Invalid lobby code</label>
-      <pixelInput></pixelInput>
-      <pixelBtn btnText="back" v-on:buttonToMenu="onButtonClick"></pixelBtn>
-      <pixelBtn btnText="join" v-on:buttonToMenu="onSubmit"></pixelBtn>
+      <div>
+        <pixelInput v-on:inputToMenu="onInputChange"></pixelInput>
+      </div>
+      <div>
+        <pixelBtn btnText="back" v-on:buttonToMenu="onButtonClick"></pixelBtn>
+        <pixelBtn btnText="join" v-on:buttonToMenu="onSubmit"></pixelBtn>
+      </div>
     </div>
   </center>
 </div>
@@ -16,11 +20,20 @@
 import pixelBtnComponent from './pixelBtnComponent.vue'
 import pixelInputComponent from './pixelInputComponent.vue'
 
+function verifyLobbyCode(code) {
+  if(code == "1234") {
+    return true
+  } else {
+    return false
+  }
+}
+
 export default {
   name: 'joinMenuComponent',
   data() {
     return {
-      codeInvalid: false
+      codeInvalid: false,
+      lobbyCode: ""
     }
   },
   components: {
@@ -30,7 +43,16 @@ export default {
     onButtonClick(value) {
       this.$emit("menuToApp", value)
     },
+    onInputChange(value) {
+      this.lobbyCode = value
+      this.codeInvalid = false
+    },
     onSubmit() {
+      if(verifyLobbyCode(this.lobbyCode)) {
+        this.codeInvalid = false
+      } else {
+        this.codeInvalid = true
+      }
     }
   }
 }

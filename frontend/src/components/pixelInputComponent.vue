@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <input>
-    </div>
+  <input v-model="inputValue" v-on:input="emitInput()">
 </template>
 
 <script>
@@ -16,8 +14,8 @@ export default {
   props: {
   },
   methods: {
-    emitClick() {
-      this.$emit("buttonToMenu", this.btnText)
+    emitInput() {
+      this.$emit("inputToMenu", this.inputValue)
     }
   }
 }

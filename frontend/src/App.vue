@@ -6,6 +6,7 @@
 </template>
 
 <script>
+
 import mainMenuComponent from './components/mainMenuComponent.vue'
 import joinMenuComponent from './components/joinMenuComponent.vue'
 
