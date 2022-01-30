@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import sound from '../sound.js';
+
 export default {
   name: 'pixelBtnComponent',
   data() {
@@ -14,7 +16,8 @@ export default {
   },
   methods: {
     emitClick() {
-      this.$emit("buttonToMenu", this.btnText)
+      sound.play("button");
+      this.$emit("buttonToParent", this.btnText);
     }
   }
 }
@@ -25,7 +28,7 @@ button {
   background-color: white;
   border-color: black;
   padding: 15px 25px;
-  font-family: 'M04_FATAL FURY BLACK', sans-serif;
+  font-family: 'Amiga Forever Pro', sans-serif;
   font-size: 200%;
   margin: 100px;
 }

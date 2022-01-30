@@ -1,5 +1,5 @@
 <template>
-  <input v-model="inputValue" v-on:input="emitInput()">
+  <input :type="type" :maxlength="maxLength" v-model="inputValue" @input="emitInput()" @keyup.enter="inputSubmit">
 </template>
 
 <script>
@@ -12,10 +12,15 @@ export default {
     }
   },
   props: {
+    type: String,
+    maxLength: Number,
   },
   methods: {
     emitInput() {
-      this.$emit("inputToMenu", this.inputValue)
+      this.$emit("inputToParent", this.inputValue);
+    },
+    inputSubmit() {
+      this.$emit("submitFromInput", true);
     }
   }
 }
@@ -26,7 +31,20 @@ input {
   background-color: white;
   border-color: black;
   padding: 15px 25px;
-  font-family: 'M04_FATAL FURY BLACK', sans-serif;
+  font-family: 'Amiga Forever Pro', sans-serif;
   font-size: 200%;
 }
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 </style>

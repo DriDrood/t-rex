@@ -1,7 +1,9 @@
 <template>
   <div>
-    <mainMenu v-if="mainMenuVisible" v-on:menuToApp="menuToApp"></mainMenu>
-    <joinMenu v-if="joinMenuVisible" v-on:menuToApp="joinToApp"></joinMenu>
+    <mainMenu v-if="visiblePage=='main'" @menuToApp="menuToApp"/>
+    <joinMenu v-if="visiblePage=='join'" @menuToApp="joinToApp"/>
+    <lobby :hostMode="false" v-if="visiblePage=='lobby'"/>
+    <lobby :hostMode="true" v-if="visiblePage=='hostLobby'"/>
   </div>
 </template>
 
@@ -9,35 +11,36 @@
 
 import mainMenuComponent from './components/mainMenuComponent.vue'
 import joinMenuComponent from './components/joinMenuComponent.vue'
+import lobbyComponent from './components/lobbyComponent.vue'
 
 export default {
   name: 'App',
   components: {
     mainMenu: mainMenuComponent,
-    joinMenu: joinMenuComponent
+    joinMenu: joinMenuComponent,
+    lobby: lobbyComponent
   }, data() {
     return {
-      mainMenuVisible: true,
-      joinMenuVisible: false,
-      hostMenuVisible: false
+      visiblePage: "main"
     }
   }, methods: {
     menuToApp(value) {
-      if(value == "join") {
-        this.mainMenuVisible = false
-        this.hostMenuVisible =  false
-        this.joinMenuVisible = true
+      if(value == "JOIN") {
+        this.visiblePage = "join"
+      } else if (value == "HOST") {
+        this.visiblePage = "hostLobby"
       }
     },
     joinToApp(value) {
-      if(value == "back") {
-        this.mainMenuVisible = true
-        this.hostMenuVisible =  false
-        this.joinMenuVisible = false
+      if(value == "BACK") {
+        this.visiblePage = "main"
+      } else if (value == "lobby") {
+        this.visiblePage = "lobby"
       }
-    }
+    },
   }
 }
+
 </script>
 
 <style>
