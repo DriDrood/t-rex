@@ -1,5 +1,5 @@
 <template>
-  <input :type="type" :maxlength="maxLength" v-model="inputValue" @input="emitInput()" @keyup.enter="inputSubmit">
+  <input :type="type" :maxlength="maxLength" v-model="inputValue" @input="emitInput" @keyup.enter="inputSubmit">
 </template>
 
 <script>
@@ -12,12 +12,13 @@ export default {
     }
   },
   props: {
+    id: String,
     type: String,
     maxLength: Number,
   },
   methods: {
     emitInput() {
-      this.$emit("inputToParent", this.inputValue);
+      this.$emit("inputToParent", [this.id, this.inputValue]);
     },
     inputSubmit() {
       this.$emit("submitFromInput", true);

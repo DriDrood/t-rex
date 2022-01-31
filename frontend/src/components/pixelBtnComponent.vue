@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import sound from '../sound.js';
 
 export default {
   name: 'pixelBtnComponent',
@@ -12,12 +11,12 @@ export default {
     }
   },
   props: {
+    id: String,
     btnText: String
   },
   methods: {
     emitClick() {
-      sound.play("button");
-      this.$emit("buttonToParent", this.btnText);
+      this.$emit("buttonToParent", this.id);
     }
   }
 }

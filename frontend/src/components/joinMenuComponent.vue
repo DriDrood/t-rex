@@ -1,20 +1,24 @@
 <template>
 <div>
   <center>
-    <h1>ENTER LOBBY CODE</h1>
-    <form @submit="onSubmit">
-      <label for="pixelInput" class="label-red" v-if="codeInvalid">Invalid lobby code</label>
+    <div v-if="formStage=='1' && !hostMode">
+      <h1>ENTER LOBBY ID</h1>
+      <label v-if="lobbyIDError" class="label-error">Invalid lobby ID</label>
       <div>
-        <pixelInput type="number" @inputToParent="onInputChange" @submitFromInput="onSubmit"/>
+        <pixelInput id="lobbyID" type="number" @inputToParent="onInputChange" @submitFromInput="onSubmit"/>
       </div>
-      <label for="pixelInput" class="label-normal" v-if="passwordInput">Enter password</label>
+      <pixelBtn btnText="BACK" id="joinBACK" @buttonToParent="onButtonClick"/>
+      <pixelBtn btnText="JOIN" id="joinJOIN" @buttonToParent="onSubmit"/>
+    </div>
+    <div v-if="formStage=='2' || hostMode">
+      <h1>PICK YOUR NICKNAME</h1>
+      <label v-if="nickError" class="label-error">Nickname is already taken or invalid</label>
       <div>
-        <pixelInput type="password" v-if="passwordInput" @inputToParent="onPassowrdInputChange" @submitFromInput="onSubmit"/>
+        <pixelInput id="nickName" maxLength="10" @inputToParent="onInputChange" @submitFromInput="onSubmit"/>
       </div>
-    </form>
-    <div>
-      <pixelBtn btnText="BACK" @buttonToParent="onButtonClick"/>
-      <pixelBtn btnText="JOIN" @buttonToParent="onSubmit"/>
+      <pixelBtn btnText="BACK" id="joinBACK" @buttonToParent="onButtonClick"/>
+      <pixelBtn v-if="hostMode" btnText="HOST" @buttonToParent="onSubmit"/>
+      <pixelBtn v-else btnText="JOIN" @buttonToParent="onSubmit"/>
     </div>
   </center>
 </div>
@@ -24,62 +28,57 @@
 import pixelBtnComponent from './pixelBtnComponent.vue';
 import pixelInputComponent from './pixelInputComponent.vue';
 import sound from '../sound.js';
-
-function verifyLobbyCode(code) {
-  if(code == "1234" || code == "789") {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function isPrivateLobby(code) {
-  if(code == "789") {
-    return true
-  } else {
-    return false
-  }
-}
+import backend from '../backendCommunication.js'
 
 export default {
   name: 'joinMenuComponent',
   data() {
     return {
-      codeInvalid: false,
-      passwordInput: false,
-      lobbyCode: "",
-      lobbyPassword: ""
+      formStage: "1",  
+      lobbyID: "",
+      nickName: "",
+      nickError: false,
+      lobbyIDError: false,
     }
   },
   components: {
     pixelBtn: pixelBtnComponent,
     pixelInput: pixelInputComponent
-  }, methods: {
-    onButtonClick(value) {
-      sound.play("button");
-      this.$emit("menuToApp", value);
+  },
+  props: {
+    hostMode: Boolean
+  },
+  methods: {
+    onInputChange(data) {
+      this.nickError = false;
+      this.lobbyIDError = false;
+      var id = data[0];
+      var value = data[1];
+      this[id] = value;
     },
-    onInputChange(value) {
-      this.lobbyCode = value;
-      this.codeInvalid = false;
-      this.passwordInput = false;
+    onButtonClick(id) {
+      sound.play("button")
+      if(id == "joinBACK") {
+        this.$emit("childToParent", ["joinMenu", "main"]);
+      }
     },
-    onPassowrdInputChange(value) {
-      this.lobbyPassword = value;
-    },
-    onSubmit(event) {
-      event?.preventDefault?.()
-      console.log("Form submitted")
-      sound.play("button");
-      if(verifyLobbyCode(this.lobbyCode)) {
-        this.codeInvalid = false;
-        if(isPrivateLobby(this.lobbyCode)) {
-          this.passwordInput = true
+    onSubmit() {
+      sound.play("button")
+      if(this.hostMode == true) {
+        this.lobbyID = backend.getlobbyID()
+        this.$emit("childToParent", ["joinMenu", "lobby", this.lobbyID]);
+      } else if(this.formStage == "1") {
+        if(backend.verifylobbyID(this.lobbyID)) {
+          this.formStage = "2"
         } else {
-          this.$emit("menuToApp", "lobby");
+          this.lobbyIDError = true;
         }
-      } else {
-        this.codeInvalid = true;
+      } else if(this.formStage == "2") {
+        if(backend.verifyNickAvailability(this.nickName, this.lobbyID)) {
+          this.$emit("childToParent", ["joinMenu", "lobby", this.lobbyID]);
+        } else {
+          this.nickError = true;
+        }
       }
     }
   }
@@ -93,7 +92,7 @@ h1 {
   margin: 100px;
   margin-top: 200px;
 }
-.label-red {
+.label-error {
   font-family: 'Amiga Forever Pro', sans-serif;
   font-size: 100%;
   color: red;

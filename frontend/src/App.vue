@@ -1,9 +1,8 @@
 <template>
   <div>
-    <mainMenu v-if="visiblePage=='main'" @menuToApp="menuToApp"/>
-    <joinMenu v-if="visiblePage=='join'" @menuToApp="joinToApp"/>
-    <lobby :hostMode="false" v-if="visiblePage=='lobby'"/>
-    <lobby :hostMode="true" v-if="visiblePage=='hostLobby'"/>
+    <mainMenu v-if="visiblePage=='main'" @childToParent="childToParent"/>
+    <joinMenu v-if="visiblePage=='join'" :hostMode="hostMode" @childToParent="childToParent"/>
+    <lobby v-if="visiblePage=='lobby'" :hostMode="hostMode" :lobbyID="lobbyID" @childToParent="childToParent"/>
   </div>
 </template>
 
@@ -18,24 +17,37 @@ export default {
   components: {
     mainMenu: mainMenuComponent,
     joinMenu: joinMenuComponent,
-    lobby: lobbyComponent
+    lobby: lobbyComponent,
   }, data() {
     return {
-      visiblePage: "main"
+      visiblePage: "main",
+      hostMode: false,
+      lobbyID: ""
     }
   }, methods: {
-    menuToApp(value) {
-      if(value == "JOIN") {
-        this.visiblePage = "join"
-      } else if (value == "HOST") {
-        this.visiblePage = "hostLobby"
-      }
-    },
-    joinToApp(value) {
-      if(value == "BACK") {
-        this.visiblePage = "main"
-      } else if (value == "lobby") {
-        this.visiblePage = "lobby"
+    childToParent(data) {
+      var child = data[0];
+      var value = data[1];
+      var additionalData = data[2]
+      if(child == "mainMenu") {
+        if(value == "join") {
+          this.hostMode = false;
+          this.visiblePage = "join";
+        } else if (value == "host") {
+          this.hostMode = true;
+          this.visiblePage = "join";
+        }
+      } else if(child == "joinMenu") {
+        if(value == "main") {
+          this.visiblePage = "main";
+        } else if (value == "lobby") {
+          this.lobbyID = additionalData;
+          this.visiblePage = "lobby";
+        }
+      } else if(child == "lobby") {
+        if(value == "main"){
+          this.visiblePage = "main";
+        }
       }
     },
   }

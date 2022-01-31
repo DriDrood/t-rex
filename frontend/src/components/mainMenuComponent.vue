@@ -2,11 +2,8 @@
 <div>
   <center>
     <h1>T-REX MULTIPLAYER</h1>
-    <pixelBtn btnText="JOIN" v-on:buttonToParent="onButtonClick"/>
-    <pixelBtn btnText="HOST" v-on:buttonToParent="onButtonClick"/>
-    <div>
-      <canvas width="600" height="150"></canvas>
-    </div>
+    <pixelBtn btnText="JOIN" id="join" v-on:buttonToParent="onButtonClick"/>
+    <pixelBtn btnText="HOST" id="host" v-on:buttonToParent="onButtonClick"/>
   </center>
 </div>
 </template>
@@ -27,7 +24,7 @@ export default {
   methods: {
     onButtonClick(value) {
       sound.play("button");
-      this.$emit("menuToApp", value);
+      this.$emit("childToParent", ["mainMenu", value]);
     }
   }
 }
