@@ -12,27 +12,25 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers();
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
-
-        services.AddSingleton<Utils.WS.Manager>();
+        services.AddCors();
+        services.AddSignalR();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        // Configure the HTTP request pipeline.
         if (env.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+            app.UseCors(opt => opt
+                .WithOrigins("http://localhost:8080")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
 
-        app.UseWebSockets();
-        app.UseMiddleware<Utils.WS.Middleware>();
         app.UseRouting();
-        // app.UseAuthorization();
-        app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+        if (!env.IsDevelopment())
+            app.UseAuthorization();
+
+        app.UseEndpoints(endpoints => endpoints.MapHub<Hubs.GameHub>("/game"));
     }
 }

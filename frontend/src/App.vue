@@ -1,5 +1,6 @@
 <template>
   <div>
+    <EchoBox />
     <mainMenu v-if="visiblePage=='main'" @childToParent="childToParent"/>
     <joinMenu v-if="visiblePage=='join'" :hostMode="hostMode" @childToParent="childToParent"/>
     <lobby v-if="visiblePage=='lobby'" :hostMode="hostMode" :lobbyID="lobbyID" @childToParent="childToParent"/>
@@ -7,7 +8,7 @@
 </template>
 
 <script>
-
+import EchoBox from "./components/EchoBox.vue"
 import mainMenuComponent from './components/mainMenuComponent.vue'
 import joinMenuComponent from './components/joinMenuComponent.vue'
 import lobbyComponent from './components/lobbyComponent.vue'
@@ -15,6 +16,7 @@ import lobbyComponent from './components/lobbyComponent.vue'
 export default {
   name: 'App',
   components: {
+    EchoBox,
     mainMenu: mainMenuComponent,
     joinMenu: joinMenuComponent,
     lobby: lobbyComponent,
