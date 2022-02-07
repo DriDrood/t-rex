@@ -46,6 +46,6 @@ export default {
     color: blue;
 }
 .received {
-    color: green;
+    color: red;
 }
 </style>

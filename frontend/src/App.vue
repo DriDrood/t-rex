@@ -30,7 +30,7 @@ export default {
     childToParent(data) {
       var child = data[0];
       var value = data[1];
-      var additionalData = data[2]
+      var additionalData = data[2];
       if(child == "mainMenu") {
         if(value == "join") {
           this.hostMode = false;
