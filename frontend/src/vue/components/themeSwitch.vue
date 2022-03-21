@@ -1,7 +1,7 @@
 <template>
 <div>
-  <button class="switch-button" v-if="theme=='light'" @click="switchTheme()">Dark</button>
-  <button v-else @click="switchTheme()">Light</button>
+  <a class="switch-button" v-if="theme=='light'" @click="switchTheme()"><img src="../../assets/images/moon.png" alt="moon"></a>
+  <a v-else @click="switchTheme()"><img src="../../assets/images/sun.png" alt="sun"></a>
 </div>
 </template>
 
