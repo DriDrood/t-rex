@@ -1,3 +1,20 @@
+:root {
+  --app-background-color: #FFFFFF;
+  --dynamic-title-color: #363636;
+  --dynamic-subtitle-color: #4a4a4a;
+}
+
+[theme="dark"] {
+  --app-background-color: #091A28;
+  --dynamic-title-color: #FFFFFF;
+  --dynamic-subtitle-color: cyan;
+}
+
 body {
-  background-color: aqua;
+  background-color: var(--app-background-color);
+  transition: all 0.3s;
+}
+
+.switch-button {
+  color: var(--app-background-color);
 }

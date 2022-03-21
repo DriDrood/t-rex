@@ -14,7 +14,7 @@ export default {
   name: 'mainMenu',
   methods: {
     changePage(newPage) {
-      this.$router.state.commit("changeDisplayPage", newPage);
+      this.$store.commit("changeDisplayPage", newPage);
     }
   }
 }

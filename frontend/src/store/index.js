@@ -2,11 +2,15 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    displayPage: "main"
+    displayPage: "main",
+    theme: "light"
   },
   mutations: {
-    chnagePage(state, newPage) {
+    changeDisplayPage(state, newPage) {
       state.displayPage = newPage;
+    },
+    switchTheme(state, newTheme) {
+      state.theme = newTheme;
     }
   },
   actions: {
