@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    displayPage: "main",
+    displayPage: "game",
     theme: "light"
   },
   mutations: {

@@ -1,14 +1,16 @@
-// var gameCavas = document.getElementById("gameCanvas");
-// var c = gameCavas.getContext("2d");
+let game = {
+  data: {
 
-// export default {
-//   game
-// }
+  },
+  run(c) {
+    c.moveTo(0, 0);
+    c.lineTo(200, 100);
+    c.stroke();
+    c.font = "30px Arial";
+    c.fillText("Hello World", 10, 50);
+  }
+}
 
-// let game = {
-//   run() {
-//     c.moveTo(0, 0);
-//     c.lineTo(200, 100);
-//     c.stroke();
-//   }
-// }
+export default {
+  game
+}
