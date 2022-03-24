@@ -15,7 +15,7 @@ export default {
   }),
   mounted() {
     this.canvas = document.getElementById("gameCanvas").getContext("2d");
-    gameScript.game.run(this.canvas)
+    gameScript.game.run(this.canvas);
   }
 }
 </script>

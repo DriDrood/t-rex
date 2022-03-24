@@ -1,13 +1,11 @@
 <template>
-<div>
-  <themeSwitch/>
+  <themeSwitch />
   <mainMenu v-if="displayPage=='main'"/>
-  <game v-if="displayPage=='game'"/>
-</div>
+  <game v-else-if="displayPage=='game'"/>
 </template>
 
 <script>
-
+import { mapState } from 'vuex';
 import mainMenu from "./vue/pages/mainMenu.vue"
 import game from "./vue/pages/game.vue"
 import themeSwitch from './vue/components/themeSwitch.vue';
@@ -20,9 +18,7 @@ export default {
     themeSwitch
   },
   computed: {
-    displayPage() {
-      return this.$store.state.displayPage;
-    }
+    ...mapState(['displayPage'])
   }
 }
 </script>

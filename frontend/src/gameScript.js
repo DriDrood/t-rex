@@ -1,12 +1,8 @@
 function loadAsset(path) {
-  console.log("Loading: " + path);
-  let assetsFolderPath = "assets/game/"
   let image = new Image();
-  image.onload = function() {
-    console.log(path + " loaded");
-  }
-  image.src = assetsFolderPath + path + ".png";
-  return image
+  image.onload = () => {};
+  image.src = `assets/game/${path}.png`;
+  return image;
 }
 
 let assets = {
@@ -70,34 +66,41 @@ class Trex {
 }
 
 class Cactus {
-  constructor(cactustype, position) {
-    this.cactustype = cactustype // Object example: {size: big, tier: 1} - cactus_big_1
-    if(cactustype.size == "big") {
-      this.yOffset = 49;
-    } else {
-      this.yOffset = 34;
-    }
+  constructor(size, tier, x, y) {
+    this.size = size;
+    this.tier = tier;
     this.position = {
-      x: position.x, 
-      y: position.y - this.yOffset
+      x: x, 
+      y: y - this.size.yOffset
     }
   }
   render(c) { // Function for rendering cactus on specified canvas (c)
-    c.drawImage(assets.cactus[this.cactustype.size + this.cactustype.tier], this.position.x, this.position.y); // 1. Asset to use as texture 2. X position 3. Y position
+    c.drawImage(assets.cactus[this.size.name + this.tier], this.position.x, this.position.y); // 1. Asset to use as texture 2. X position 3. Y position
   }
 }
+
+class CactusSize {
+  constructor(name, yOffset) {
+    this.name = name;
+    this.yOffset = yOffset;
+  }
+}
+const cactusSizes = {
+  big: new CactusSize("big", 49),
+  small: new CactusSize("small", 34),
+};
 
 let game = {
   data: {
   },
   run(c) {
     let cactusGroup = [
-      new Cactus({size: "big", tier: 0}, {x: 50, y: 80}),
-      new Cactus({size: "big", tier: 1}, {x: 100, y: 80}),
-      new Cactus({size: "big", tier: 2}, {x: 200, y: 80}),
-      new Cactus({size: "small", tier: 0}, {x: 300, y: 80}),
-      new Cactus({size: "small", tier: 1}, {x: 400, y: 80}),
-      new Cactus({size: "small", tier: 2}, {x: 500, y: 80})
+      new Cactus(cactusSizes.big, 0, 50, 80),
+      new Cactus(cactusSizes.big, 1, 100, 80),
+      new Cactus(cactusSizes.big, 2, 200, 80),
+      new Cactus(cactusSizes.small, 0, 300, 80),
+      new Cactus(cactusSizes.small, 1, 400, 80),
+      new Cactus(cactusSizes.small, 2, 500, 80)
     ];
 
     let trex = new Trex

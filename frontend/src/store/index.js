@@ -11,6 +11,7 @@ export default createStore({
     },
     switchTheme(state, newTheme) {
       state.theme = newTheme;
+      document.documentElement.setAttribute('theme', newTheme);
     }
   },
   actions: {

@@ -1,30 +1,30 @@
 <template>
 <div>
-  <a v-if="theme=='light'" @click="switchTheme()"><img src="../../assets/images/moon.png" alt="moon"></a>
-  <a v-else @click="switchTheme()"><img src="../../assets/images/sun.png" alt="sun"></a>
+  <div @click="switchTheme()">
+    <img :src="`/assets/images/${image}.png`" :alt="image">
+  </div>
 </div>
 </template>
 
 <script>
-
-let htmlElement = document.documentElement;
+import { mapState } from 'vuex';
 
 export default {
   name: "themeSwitch",
   computed: {
-    theme() {
-      return this.$store.state.theme;
+    ...mapState(['theme']),
+    image() {
+      return this.theme == "light"
+        ? "moon"
+        : "sun";
     }
   }, 
   methods: {
     switchTheme() {
-      if(this.$store.state.theme == "light") {
-        this.$store.commit("switchTheme", "dark");
-        htmlElement.setAttribute('theme', 'dark');
-      } else {
-        this.$store.commit("switchTheme", "light");
-        htmlElement.setAttribute('theme', 'light');
-      }
+      const newTheme = this.theme == "light"
+        ? "dark"
+        : "light";
+      this.$store.commit("switchTheme", newTheme);
     }
   }
 }
