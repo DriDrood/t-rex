@@ -14,7 +14,3 @@ body {
   background-color: var(--app-background-color);
   transition: all 0.3s;
 }
-
-.switch-button {
-  color: var(--app-background-color);
-}

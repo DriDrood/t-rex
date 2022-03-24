@@ -1,6 +1,6 @@
 <template>
-<div>
-  <canvas id="gameCanvas" class="game-canvas"></canvas>
+<div id="canvasContainer" class="game-canvas-container game-canvas-day">
+  <canvas id="gameCanvas" class="game-canvas" width="600" height="150"></canvas>
 </div>
 </template>
 
@@ -22,8 +22,19 @@ export default {
 
 <style>
 .game-canvas {
-  width: 600px;
-  height: 150px;
   border:2px solid black;
 }
+
+.game-canvas-container {
+  width: fit-content;
+  height: fit-content;
+}
+
+.game-canvas-day {
+  background-color: rgb(255, 255, 255);
+}
+.game-canvas-night {
+
+}
+
 </style>
