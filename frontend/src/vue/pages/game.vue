@@ -6,7 +6,7 @@
 
 <script>
 
-import gameScript from "../../gameScript.js"
+import gameScript from "../../game/gameScript.js"
 
 export default {
   name: 'game',
