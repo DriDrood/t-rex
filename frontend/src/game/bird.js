@@ -3,6 +3,7 @@ import { mainRender } from './mainRender.js'
 import { Anim } from './animation.js';
 
 export class Bird {
+  name = "bird"
   constructor(level) {
     this.level = level;
     switch(level) {

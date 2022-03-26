@@ -6,15 +6,13 @@ function detect(obstacle, trex) {
   let oSY = obstacle.position.y + obstacle.height / 2;
 
   let obsDist = Math.sqrt((tSX-oSX)**2+(tSY-oSY)**2) + 3
+  if (obsDist <= (obstacle.height + trex.height) / 2) {
+    // collision detected!
+    console.log("Collision!")
+    trex.state = "dead";
+    return true
+  } else return false
 
-  if (obstacle.name == 'cactus') {
-    if (obsDist <= (obstacle.height + trex.height) / 2) {
-      // collision detected!
-      console.log("Collision!")
-      trex.state = "dead";
-      return true
-    } else return false
-  }
 }
 
 export default {

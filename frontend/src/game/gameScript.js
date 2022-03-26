@@ -16,9 +16,9 @@ let cactusGroup = [ // Create array of cactus objects
 ];
 
 let birdGroup = [
-  new Bird(0),
+  //new Bird(0),
   new Bird(1),
-  new Bird(2)
+  //new Bird(2)
 ]
 
 let speed = 2;
@@ -43,7 +43,7 @@ let game = {
       })
 
       ground.update();
-      
+
       trex.update(); // Updating trex postion, data etc.
 
       // ------- Rendering ----------
@@ -64,6 +64,12 @@ let game = {
 
       cactusGroup.forEach(cactus => { // Checking if there is collison between trex and any of cactuses
         if (collision.detect(cactus, trex)) {
+          run = false;
+        }
+      })
+
+      birdGroup.forEach(bird => { // Checking if there is collison between trex and any of cactuses
+        if (collision.detect(bird, trex)) {
           run = false;
         }
       })
