@@ -1,24 +1,24 @@
 function mount(object) {
   addEventListener('keydown', ({key}) => {
     if (key == 'ArrowUp' || key == 'w') {
-      console.log('UP');
+      //console.log('UP');
       if (object.position.y <= 20) {
         object.setVelocity('y',10);
       }
 
     } else if (key == 'ArrowDown' || key == 's') {
-      console.log('DOWN');
+      //console.log('DOWN');
       object.setVelocity('y',-10);
       if (object.position.y < 21) {
         object.duck = true;
       }
 
     } else if (key == 'ArrowLeft' || key == 'a') {
-      console.log('LEFT');
+      //console.log('LEFT');
       object.setVelocity('x', -5);
 
     } else if (key == 'ArrowRight' || key == 'd') {
-      console.log('RIGHT');
+      //console.log('RIGHT');
       object.setVelocity('x', 5);
     }
   })

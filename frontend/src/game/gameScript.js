@@ -2,16 +2,25 @@ import { mainRender } from './mainRender.js'
 import { Cactus } from './cactus.js'
 import { cactusTypes } from './cactus.js'
 import { Trex } from './trex.js'
+import { Bird } from './bird.js'
 import { Ground } from './ground.js'
 import controls from './controls.js'
 import collision from './collision.js'
 
 let trex = new Trex; // Create new trex object
 let ground = new Ground; // Create new ground object
+
 let cactusGroup = [ // Create array of cactus objects
   new Cactus(cactusTypes.big1, 200, 18),
   new Cactus(cactusTypes.small2, 400, 18),
 ];
+
+let birdGroup = [
+  new Bird(0),
+  new Bird(1),
+  new Bird(2)
+]
+
 let speed = 2;
 
 let run = true;
@@ -29,7 +38,12 @@ let game = {
 
       // ------- Updatating ----------
 
+      birdGroup.forEach(bird => {
+        bird.update();
+      })
+
       ground.update();
+      
       trex.update(); // Updating trex postion, data etc.
 
       // ------- Rendering ----------
@@ -39,6 +53,10 @@ let game = {
       cactusGroup.forEach(cactus => { // Rendering all cactuses
         cactus.render(c);
       });
+
+      birdGroup.forEach(bird => {
+        bird.render();
+      })
 
       trex.render(c); // Rendering trex
 
