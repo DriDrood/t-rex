@@ -1,15 +1,14 @@
 function detect(obstacle, trex) {
-  let tX = trex.position.x;
-  let tY = trex.position.y;
+  let tSX = trex.position.x + trex.width / 2;
+  let tSY = trex.position.y + trex.height / 2;
 
-  let oX = obstacle.position.x;
-  let oY = obstacle.position.y;
+  let oSX = obstacle.position.x + obstacle.width / 2;
+  let oSY = obstacle.position.y + obstacle.height / 2;
+
+  let obsDist = Math.sqrt((tSX-oSX)**2+(tSY-oSY)**2) + 3
 
   if (obstacle.name == 'cactus') {
-    if (tX < oX + obstacle.width &&
-      tX + trex.width > oX &&
-      tY < oY + obstacle.height &&
-      trex.height + tY > oY) {
+    if (obsDist <= (obstacle.height + trex.height) / 2) {
       // collision detected!
       console.log("Collision!")
       trex.state = "dead";
