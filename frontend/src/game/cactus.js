@@ -1,5 +1,6 @@
 import { assets } from './assets.js'
 import { mainRender } from './mainRender.js'
+import { data } from './data.js';
 
 export class Cactus {
   name = "cactus";
@@ -12,6 +13,9 @@ export class Cactus {
       x: x,
       y: y
     }
+  }
+  update() {
+    this.position.x -= data.speed;
   }
   render() { // Function for rendering cactus on specified canvas (c)
     mainRender.render(assets.cactus[this.size + this.tier], this.position.x, this.position.y)

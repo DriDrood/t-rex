@@ -6,7 +6,7 @@
 
 <script>
 
-import gameScript from "../../game/gameScript.js"
+import { game } from "../../game/gameScript.js"
 
 export default {
   name: 'game',
@@ -14,8 +14,8 @@ export default {
     c: null 
   }),
   mounted() {
-    this.canvas = document.getElementById("gameCanvas").getContext("2d");
-    gameScript.game.run(this.canvas);
+    let canvas = document.getElementById("gameCanvas").getContext("2d");
+    game.run(canvas);
   }
 }
 </script>

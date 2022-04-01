@@ -28,7 +28,7 @@ export class Bird {
     y: 50
   };
   velocity = {
-    x: 0,
+    x: -(Math.random() * (2.5 - 1) + 1),
     y: 0
   }
   update() {
