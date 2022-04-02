@@ -1,9 +1,11 @@
 <template>
-<div>
-  <h1>T-rex multiplayer</h1>
-  <div>
-    <button @click="changePage('join')">Join</button>
-    <button @click="changePage('host')">Host</button>
+<div class="row">
+  <div class="mainManuContainer">
+    <h1>T-rex multiplayer</h1>
+    <div class="mainMenuButtons">
+      <button class="mainButton" @click="changePage('join')">Join</button>
+      <button class="mainButton" @click="changePage('host')">Host</button>
+    </div>
   </div>
 </div>
 </template>
@@ -21,4 +23,59 @@ export default {
 </script>
 
 <style>
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.mainManuContainer {
+  font-size: 1.4rem;
+  text-align: center;
+  width: 80%;
+  max-width: 1300px;
+  margin-top: 20vh;
+}
+
+.mainManuContainer h1 {
+  font-size: 2.5em;
+}
+
+.mainMenuButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8rem;
+  margin: 4rem;
+}
+
+.mainButton {
+  font-size: 1.2em;
+  background: var(--button-background-color);
+  border-radius: 0;
+  border: 5px solid var(--font-color);
+  padding: .75em 2em;
+}
+
+.mainButton:active {
+  transform: translateY(4px);
+}
+
+@media screen and (max-width: 640px) {
+.mainManuContainer {
+  font-size: 1rem;
+  }
+.mainMenuButtons {
+  flex-direction: column;
+  font-size: 1.2rem;
+  gap: 3rem;
+  }
+}
+@media screen and (max-width: 430px){
+  .mainManuContainer{
+    font-size: .75em;
+    width: 90%;
+  }
+}
 </style>

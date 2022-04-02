@@ -26,12 +26,14 @@ export default {
 }
 
 .game-canvas-container {
-  width: fit-content;
-  height: fit-content;
+  display: grid;
+  place-items: center;
+  
 }
 
 .game-canvas-day {
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
+  background-color: var(--background-color);
 }
 .game-canvas-night {
 

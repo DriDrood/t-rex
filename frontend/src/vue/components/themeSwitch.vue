@@ -1,9 +1,7 @@
 <template>
-<div>
-  <div @click="switchTheme()">
+  <div class="switchTheme" @click="switchTheme()">
     <img :src="`/assets/images/${image}.png`" :alt="image">
   </div>
-</div>
 </template>
 
 <script>
@@ -30,3 +28,8 @@ export default {
 }
 
 </script>
+<style>
+.switchTheme {
+  width: 50px;
+}
+</style>

@@ -1,16 +1,27 @@
 :root {
+  --font-color: #030303;
   --app-background-color: #FFFFFF;
-  --dynamic-title-color: #363636;
-  --dynamic-subtitle-color: #4a4a4a;
+  --error-red-color: #d10000;
 }
 
 [theme="dark"] {
+  --font-color: #c9c8b8;
+  --error-red-color: #a30000;
   --app-background-color: #091A28;
-  --dynamic-title-color: #FFFFFF;
-  --dynamic-subtitle-color: cyan;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  font-family: 'Press Start 2P', cursive;
+  color: var(--font-color);
 }
 
 body {
   background-color: var(--app-background-color);
   transition: all 0.3s;
+  margin: 0;
+  padding: 0;
 }
