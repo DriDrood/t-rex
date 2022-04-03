@@ -32,8 +32,7 @@ export default {
 }
 
 .game-canvas-day {
-  /* background-color: rgb(255, 255, 255); */
-  background-color: var(--background-color);
+  background-color: rgb(255, 255, 255);
 }
 .game-canvas-night {
 

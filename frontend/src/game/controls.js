@@ -3,7 +3,7 @@ function mount(object) {
     if (key == 'ArrowUp' || key == 'w') {
       //console.log('UP');
       if (object.position.y <= 20) {
-        object.setVelocity('y',10);
+        object.setVelocity('y',9.5);
       }
 
     } else if (key == 'ArrowDown' || key == 's') {
