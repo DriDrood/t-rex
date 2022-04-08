@@ -7,6 +7,7 @@ import { Bird } from './bird.js'
 import { Ground } from './ground.js'
 import { Cloud } from './cloud.js'
 import controls from './controls.js'
+import backendController from './backendController.js'
 import collision from './collision.js'
 
 let trex = new Trex; // Create new trex object
@@ -35,7 +36,12 @@ let run = true;
 
 export let game = {
   run(c) {
-    controls.mount(trex); // Mount keyboard controls to our trex object
+    controls.mount(trex); // Mount keyboard controls to client trex object
+
+    trexList.forEach(trex => {
+      backendController.mount(trex); // Mount backend controllers to trex objects
+    })
+
     mainRender.setCanvas(c); // Mount game canvas as the one we are rendering at
 
     function mainUpdate() { // Main game loop
@@ -60,7 +66,11 @@ export let game = {
 
       ground.update();  // Updating ground position
 
-      trex.update(); // Updating trex postion, data etc.
+      trex.update(); // Updating trex postion, data etc. (Client side)
+
+      trexList.forEach(trex => { // Updating trex postion, data etc. (Server side)
+        trex.update();
+      })
 
       // ------- Rendering ----------
 
@@ -78,7 +88,11 @@ export let game = {
         bird.render();
       })
 
-      trex.render(c); // Rendering trex
+      trex.render(); // Rendering trex (Client local)
+
+      trexList.forEach(trex => { // Rendering trex (Server controlled)
+        trex.render();
+      })
 
       // ------- Collisions ----------
 

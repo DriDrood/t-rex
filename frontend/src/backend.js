@@ -1,6 +1,7 @@
 const signalR = require("@microsoft/signalr");
+let connection;
 const start = async () => {
-  let connection = new signalR.HubConnectionBuilder()
+  connection = new signalR.HubConnectionBuilder()
     .withUrl("/api/game")
     .build()
   await connection.start();
@@ -15,6 +16,7 @@ const leaveLobby = async () => {
 }
 
 export default {
+  connection,
   start,
   joinLobby,
   leaveLobby,
