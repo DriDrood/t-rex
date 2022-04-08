@@ -12,7 +12,7 @@
     </div>
     <div class="joinButtons">
       <button class="joinButton" @click="changePage('main')">Back</button>
-      <button class="joinButton" @click="verifyJoin">Enter</button>
+      <button class="joinButton" @click="joinLobby">Enter</button>
     </div>
   </div>
 </div>
@@ -32,17 +32,9 @@ export default {
     changePage(newPage) {
       this.$store.commit("changeDisplayPage", newPage);
     },
-    
-    // Honzův kód
-
-    // verifyJoin() {
-    //   if (backend.verifyLobbyID(this.lobbyID)) {
-    //     if (backend)
-    //     this.changePage('lobby');
-    //   } else {
-    //     this.failId = true;
-    //   }
-    // }
+    joinLobby() {
+      backend.joinLobby(this.nickname, this.lobbyID);
+    }
   }
 }
 </script>
