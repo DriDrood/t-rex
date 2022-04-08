@@ -35,7 +35,7 @@ export default {
    ...mapState(['displayPage'])
   },
   async mounted() {
-    backend.start();
+    await backend.start();
   }
 }
 </script>

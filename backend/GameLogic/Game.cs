@@ -1,4 +1,4 @@
-using T_rex.Backend.GameLogic.Player;
+using T_rex.Backend.Models;
 namespace T_rex.Backend.GameLogic;
 
 public class Game
