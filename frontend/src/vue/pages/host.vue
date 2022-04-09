@@ -1,6 +1,6 @@
 <template>
 <div class="row">
-  <div class="mainManuContainer">
+  <div class="hostContainer">
     <h1>Host</h1>
     <p v-if="err" class="errText">{{ errText }}</p>
     <p>Nickname: <input v-model="nickname"></p>
@@ -41,4 +41,15 @@ export default {
 </script>
 
 <style>
+.hostContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.4rem;
+  text-align: center;
+  width: 80%;
+  max-width: 1000px;
+  margin-top: 15vh;
+}
 </style>

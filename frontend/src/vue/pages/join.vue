@@ -5,7 +5,7 @@
     <div class="joinInput">
       <span v-if="err" class="errText">{{ errText }}</span>
       <p>nickname:</p>
-      <input v-model="nickname" type="text" maxlength="15" placeholder="MrHat">
+      <input v-model="nickname" type="text" maxlength="10" placeholder="MrHat">
       <p>lobby id:</p>
       <input v-model="lobbyID" type="number" pattern="\d*" maxlength="6" placeholder="123456">
     </div>
@@ -46,13 +46,6 @@ export default {
 }
 </script>
 <style>
-.row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
 .joinContainer {
   display: flex;
   justify-content: center;
@@ -63,12 +56,6 @@ export default {
   width: 80%;
   max-width: 1000px;
   margin-top: 15vh;
-}
-
-.failJoinMessage{
-  font-size: .75em;
-  color: var(--error-red-color);
-  padding: 2rem 0;
 }
 
 .joinContainer h2 {

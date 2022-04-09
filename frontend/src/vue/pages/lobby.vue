@@ -1,6 +1,6 @@
 <template>
 <div class="row">
-  <div class="mainManuContainer">
+  <div class="mainMenuContainer">
     <h1>Lobby</h1>
     <p>Players: {{ playerList }}</p>
     <button @click="joinLobby">Leave</button>

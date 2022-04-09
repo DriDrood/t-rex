@@ -45,4 +45,11 @@ export default {
   font-size: 0.5em;
   color: red;
 }
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 </style>

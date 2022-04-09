@@ -1,6 +1,6 @@
 <template>
 <div class="row">
-  <div class="mainManuContainer">
+  <div class="mainMenuContainer">
     <h1>T-rex multiplayer</h1>
     <div class="mainMenuButtons">
       <button class="mainButton" @click="changePage('join')">Join</button>
@@ -23,14 +23,7 @@ export default {
 </script>
 
 <style>
-.row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.mainManuContainer {
+.mainMenuContainer {
   font-size: 1.4rem;
   text-align: center;
   width: 80%;
@@ -38,7 +31,7 @@ export default {
   margin-top: 20vh;
 }
 
-.mainManuContainer h1 {
+.mainMenuContainer h1 {
   font-size: 2.5em;
 }
 
@@ -59,11 +52,11 @@ export default {
 }
 
 .mainButton:active {
-  transform: translateY(4px);
+  transform: translateY(5px);
 }
 
 @media screen and (max-width: 640px) {
-.mainManuContainer {
+.mainMenuContainer {
   font-size: 1rem;
   }
 .mainMenuButtons {
@@ -73,7 +66,7 @@ export default {
   }
 }
 @media screen and (max-width: 430px){
-  .mainManuContainer{
+  .mainMenuContainer{
     font-size: .75em;
     width: 90%;
   }
