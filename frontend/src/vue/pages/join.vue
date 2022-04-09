@@ -3,8 +3,7 @@
   <div class="joinContainer">
     <h2>JOIN</h2>
     <div class="joinInput">
-      <span v-if="failId" class="failJoinMessage">Lobby doesn't exist.</span>
-      <span v-else-if="failUsername" class="failJoinMessage">This username is already taken.</span>
+      <span v-if="err" class="errText">{{ errText }}</span>
       <p>nickname:</p>
       <input v-model="nickname" type="text" maxlength="15" placeholder="MrHat">
       <p>lobby id:</p>
@@ -19,12 +18,13 @@
 </template>
 <script>
 import backend from '../../backend.js'
+import validations from '../../validations.js'
 
 export default {
   name: 'join',
   data: () => ({
-    failUsername: false,
-    failId: false,
+    err: false,
+    errText: "",
     lobbyID: null,
     nickname: ""
   }),
@@ -33,7 +33,14 @@ export default {
       this.$store.commit("changeDisplayPage", newPage);
     },
     joinLobby() {
-      backend.joinLobby(this.nickname, this.lobbyID);
+      this.err = false;
+      let payload = validations.verifyJoin(this.nickname, this.lobbyID);
+      if (payload.success) {
+        backend.joinLobby(this.nickname, this.lobbyID);
+      } else {
+        this.err = true;
+        this.errText = payload.message;
+      }
     }
   }
 }

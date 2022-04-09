@@ -7,17 +7,22 @@ const start = async () => {
   await connection.start();
 }
 
+const createLobby = async (nickname) => {
+  await connection.invoke("createLobby", nickname);
+}
+
 const joinLobby = async (nickname, lobbyID) => {
   await connection.invoke("joinLobby", nickname);
 }
 
 const leaveLobby = async () => {
-    await connection.invoke("leaveLobby");
+  await connection.invoke("leaveLobby");
 }
 
 export default {
   connection,
   start,
+  createLobby,
   joinLobby,
   leaveLobby,
 }

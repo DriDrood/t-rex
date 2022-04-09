@@ -41,4 +41,8 @@ export default {
 </script>
 
 <style>
+.errText {
+  font-size: 0.5em;
+  color: red;
+}
 </style>
