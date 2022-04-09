@@ -24,7 +24,7 @@ export default {
   methods: {
     createLobby() {
       this.err = false;
-      let payload = validations.verifyNick(this.nick);
+      let payload = validations.verifyNick(this.nickname);
       if (!payload.success) {
         this.err = true;
         this.errText = payload.message;
