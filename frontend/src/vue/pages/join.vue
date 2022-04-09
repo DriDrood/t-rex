@@ -3,10 +3,9 @@
   <div class="joinContainer">
     <h2>JOIN</h2>
     <div class="joinInput">
-      <span v-if="failId" class="failJoinMessage">Lobby doesn't exist.</span>
-      <span v-else-if="failUsername" class="failJoinMessage">This username is already taken.</span>
+      <span v-if="err" class="errText">{{ errText }}</span>
       <p>nickname:</p>
-      <input v-model="nickname" type="text" maxlength="15" placeholder="MrHat">
+      <input v-model="nickname" type="text" maxlength="10" placeholder="MrHat">
       <p>lobby id:</p>
       <input v-model="lobbyID" type="number" pattern="\d*" maxlength="6" placeholder="123456">
     </div>
@@ -19,12 +18,13 @@
 </template>
 <script>
 import backend from '../../backend.js'
+import validations from '../../validations.js'
 
 export default {
   name: 'join',
   data: () => ({
-    failUsername: false,
-    failId: false,
+    err: false,
+    errText: "",
     lobbyID: null,
     nickname: ""
   }),
@@ -33,19 +33,19 @@ export default {
       this.$store.commit("changeDisplayPage", newPage);
     },
     joinLobby() {
-      backend.joinLobby(this.nickname, this.lobbyID);
+      this.err = false;
+      let payload = validations.verifyJoin(this.nickname, this.lobbyID);
+      if (payload.success) {
+        backend.joinLobby(this.nickname, this.lobbyID);
+      } else {
+        this.err = true;
+        this.errText = payload.message;
+      }
     }
   }
 }
 </script>
 <style>
-.row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
 .joinContainer {
   display: flex;
   justify-content: center;
@@ -56,12 +56,6 @@ export default {
   width: 80%;
   max-width: 1000px;
   margin-top: 15vh;
-}
-
-.failJoinMessage{
-  font-size: .75em;
-  color: var(--error-red-color);
-  padding: 2rem 0;
 }
 
 .joinContainer h2 {

@@ -35,10 +35,21 @@ export default {
    ...mapState(['displayPage'])
   },
   async mounted() {
-    backend.start();
+    await backend.start();
   }
 }
 </script>
 
 <style>
+.errText {
+  font-size: 0.5em;
+  color: red;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 </style>
