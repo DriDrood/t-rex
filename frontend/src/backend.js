@@ -12,7 +12,13 @@ const joinLobby = async (nickname, lobbyID) => {
 }
 
 const leaveLobby = async () => {
-    await connection.invoke("leaveLobby");
+  await connection.invoke("leaveLobby");
+}
+
+const getHallOfFameData = () => {
+  let randomValues = [{name: "Dumba", score: 4513}, {name: "Fukl", score: 3238}, {name: "Kuba", score: 2314}, {name: "Tomas", score: 456}, {name: "Honza", score: 404}]
+  //const data = await connection.invoke("getHallOfFameData");
+  return randomValues; // Only for testing
 }
 
 export default {
@@ -20,4 +26,5 @@ export default {
   start,
   joinLobby,
   leaveLobby,
+  getHallOfFameData,
 }

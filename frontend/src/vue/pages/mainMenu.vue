@@ -7,13 +7,18 @@
       <button class="mainButton" @click="changePage('host')">Host</button>
     </div>
   </div>
+  <hallOfFame/>
 </div>
 </template>
 
 <script>
+import hallOfFame from '../components/hallOfFame.vue';
 
 export default {
   name: 'mainMenu',
+  components: {
+    hallOfFame
+  },
   methods: {
     changePage(newPage) {
       this.$store.commit("changeDisplayPage", newPage);

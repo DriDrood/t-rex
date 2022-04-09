@@ -31,5 +31,6 @@ export default {
 <style>
 .switchTheme {
   width: 50px;
+  margin: 10px;
 }
 </style>
