@@ -35,6 +35,9 @@ export default {
   display: flex;
   flex-direction: column;
 }
+.hallOfFame-scores {
+  text-align: right;
+}
 .hallOfFame-text{
   margin-left: 10px;
   margin-right: 10px;
