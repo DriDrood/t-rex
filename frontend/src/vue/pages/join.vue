@@ -4,9 +4,9 @@
     <h2>JOIN</h2>
     <div class="joinInput">
       <span v-if="err" class="errText">{{ errText }}</span>
-      <p>nickname:</p>
+      <p>Nickname:</p>
       <input v-model="nickname" type="text" maxlength="10" placeholder="MrHat">
-      <p>lobby id:</p>
+      <p>Lobby ID:</p>
       <input v-model="lobbyID" type="number" pattern="\d*" maxlength="6" placeholder="123456">
     </div>
     <div class="joinButtons">
