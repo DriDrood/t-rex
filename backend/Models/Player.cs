@@ -1,12 +1,13 @@
 namespace T_rex.Backend.Models;
 public class Player
 {
-    public Player(string nickname, string playerId)
+    public Player(string id, string nickname)
     {
+        Id = id;
         Nickname = nickname;
-        PlayerId = playerId;
     }
-    
-    public string PlayerId { get; set; }
+
+    public string Id { get; set; }
     public string Nickname { get; set; }
+    public Game? Game { get; set; }
 }

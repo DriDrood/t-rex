@@ -1,35 +1,46 @@
 using Microsoft.AspNetCore.SignalR;
+using T_rex.Backend.Managers;
 using T_rex.Backend.Models;
 
 namespace T_rex.Backend.Hubs;
-
 public class GameHub : Hub
 {
-    List<Player> ListOfPlayers = new();
-    public Task Echo(string message)
+    public GameHub(GameManager userHelper)
     {
-        return Clients.Caller.SendAsync("echo", message);
+        _userHelper = userHelper;
+        _userHelper.Init(Context);
     }
 
-    public Task SendDirection(string direction){
-        
-        string PlayerID = Context.ConnectionId;
-        return Clients.All.SendAsync("ReceiveMessage", direction, PlayerID);
+    private readonly GameManager _userHelper;
 
-    }
-    public void JoinLobby(string nickname)
+    public async Task CreateGame()
     {
-        ListOfPlayers.Add(newPlayer(nickname, Context.ConnectionId));
-    }    
-    public Player newPlayer(string nickname, string playerId)
+        Game game = _userHelper.CreateGame();
+        await Clients.Caller.SendAsync("gameCreated", game.Id);
+    }
+
+    public async Task JoinGame(Guid gameId)
     {
-        var player = new Player(nickname, playerId);
-        return player;
+        _userHelper.JoinGame(gameId);
+        await Clients.Caller.SendAsync("joined", _userHelper.Game!.Players);
+        await Clients.Others.SendAsync("playerJoined", _userHelper.Player);
     }
 
-    public Boolean startGame(Boolean start){
-
-        return start;
+    public async Task LeaveGame()
+    {
+        _userHelper.LeaveGame();
+        await Clients.All.SendAsync("playerLeft", _userHelper.Player);
     }
 
+    public async Task SetNickname(string nickname)
+    {
+        _userHelper.Rename(nickname);
+        await Clients.All.SendAsync("playerRenamed", _userHelper.Player);
+    }
+    
+    public async Task SendDirection(string direction)
+    {    
+        string playerId = Context.ConnectionId;
+        await Clients.All.SendAsync("ReceiveMessage", direction, playerId);
+    }
 }

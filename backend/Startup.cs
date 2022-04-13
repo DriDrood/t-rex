@@ -12,19 +12,27 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddCors(opt => opt.AddPolicy("def", p => p.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:8080").AllowCredentials()));
+        services.AddCors(opt => opt.AddPolicy("def", p => p
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("http://localhost:8080")
+            .AllowCredentials()));
         services.AddSignalR();
+
+        services.AddSingleton<Repositories.ConnectionRepository>();
+        services.AddSingleton<Repositories.GameRepository>();
+        services.AddSingleton<Repositories.PlayerRepository>();
+
+        services.AddScoped<Managers.GameManager>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        app.UseCors("def");
+        if (env.IsDevelopment())
+            app.UseCors("def");
+
         app.UseRouting();
-
-        if (!env.IsDevelopment())
-            app.UseAuthorization();
-
         app.UseEndpoints(endpoints => endpoints.MapHub<Hubs.GameHub>("/api/game"));
     }
 }
