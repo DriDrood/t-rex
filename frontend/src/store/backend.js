@@ -9,7 +9,7 @@ export default {
   mutations: {
     beCreateConnection: (state) => {
       state.connection = new signalR.HubConnectionBuilder()
-        .withUrl("http://localhost:5000/api/game")
+        .withUrl("/api/game")
         .build();
     },
     // method, action
