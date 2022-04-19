@@ -45,4 +45,12 @@ export default {
 </script>
 
 <style>
+button {
+  font-size: 1.2em;
+  background: var(--button-background-color);
+  border-radius: 0;
+  border: 5px solid var(--font-color);
+  padding: 0.75em 2em;
+  margin: 0.5em;
+}
 </style>
