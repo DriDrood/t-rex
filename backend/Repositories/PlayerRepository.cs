@@ -16,7 +16,7 @@ public class PlayerRepository
             return player;
 
         string randomNickname = $"{ADJECTIVES.RandomItem()} {NOUNS.RandomItem()}";
-        Player newPlayer = new Player(randomNickname, playerId);
+        Player newPlayer = new Player(playerId, randomNickname);
         _playerMap[playerId] = newPlayer;
 
         return newPlayer;
@@ -27,6 +27,6 @@ public class PlayerRepository
         player.Nickname = newNickname;
     }
 
-    private static readonly string[] NOUNS = new string[] { "elephant", "charlady" };
-    private static readonly string[] ADJECTIVES = new string[] { "smart", "dummy", "pritty" };
+    private static readonly string[] NOUNS = new string[] { "elephant", "charlady", "ladybug", "octocat", "Kevin" };
+    private static readonly string[] ADJECTIVES = new string[] { "smart", "dummy", "pritty", "green", "global" };
 }

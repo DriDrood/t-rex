@@ -1,0 +1,52 @@
+const signalR = require("@microsoft/signalr");
+
+export default {
+  state: {
+    connection: null,
+    listeners: new Set(),
+    queue: [],
+  },
+  mutations: {
+    beCreateConnection: (state) => {
+      state.connection = new signalR.HubConnectionBuilder()
+        .withUrl("http://localhost:5000/api/game")
+        .build();
+    },
+    // method, action
+    beOn: (state, payload) => {
+      // listener already exists -> ignore
+      if (state.listeners.has(payload.method))
+        return;
+
+      state.listeners.add(payload.method);
+      state.connection.on(payload.method, payload.action);
+    },
+    // method, payload
+    beEnqueue: (state, payload) => {
+      state.queue.push(payload);
+    },
+  },
+  actions: {
+    beInit: async (context) => {
+      context.commit('beCreateConnection');
+      await context.state.connection.start();
+
+      while (context.state.queue.length) {
+        const item = context.state.queue.pop();
+        context.dispatch('beSend', item);
+      }
+    },
+    // method, payload
+    beSend: async (context, payload) => {
+      if (context.state.connection == null || context.state.connection.state != "Connected") {
+        context.commit('beEnqueue', payload);
+        return;
+      }
+      
+      if (payload.payload != null)
+        await context.state.connection.invoke(payload.method, payload.payload);
+      else
+        await context.state.connection.invoke(payload.method);
+    },
+  }
+};

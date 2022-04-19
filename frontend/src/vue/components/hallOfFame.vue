@@ -2,7 +2,7 @@
   <p>Hall of Fame</p>
   <div class="hallOfFame-container">
     <div class="hallOfFame-names">
-      <p v-for="(player, index) in hallData" class="hallOfFame-text">{{ index+1 }}.{{ player.name }}</p>
+      <p v-for="(player, index) in hallOfFame" class="hallOfFame-text">{{ index+1 }}.{{ player.name }}</p>
     </div>
     <div class="hallOfFame-scores">
       <p v-for="player in hallData" class="hallOfFame-text">{{ player.score }}m</p>
@@ -11,15 +11,16 @@
 </template>
 
 <script>
-import backend from '../../backend.js'
+import { mapState } from 'vuex'
 
 export default {
   name: 'hallOfFame',
   computed: {
-    hallData() {
-      return backend.getHallOfFameData();
-    }
+    ...mapState(['hallOfFame'])
   },
+  mounted() {
+    this.$store.dispatch('loadHallOfFame');
+  }
 }
 </script>
 

@@ -4,7 +4,7 @@
     <h1>T-rex multiplayer</h1>
     <div class="mainMenuButtons">
       <button class="mainButton" @click="changePage('join')">Join</button>
-      <button class="mainButton" @click="changePage('host')">Host</button>
+      <button class="mainButton" @click="host">Host</button>
     </div>
   </div>
   <hallOfFame/>
@@ -22,6 +22,9 @@ export default {
   methods: {
     changePage(newPage) {
       this.$store.commit("changeDisplayPage", newPage);
+    },
+    host() {
+      this.$store.dispatch('host');
     }
   }
 }

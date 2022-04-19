@@ -1,7 +1,7 @@
-import backend from '../backend.js'
+import Store from '../store/index'
 
 function mount(object) {
-  backend.connection.on('directionDown', (direction) => {
+  Store.commit('beOn', { method: 'directionDown', action: (direction) => {
     if (direction == 'up') {
       //console.log('UP');
       if (object.position.y <= 20) {
@@ -23,15 +23,15 @@ function mount(object) {
       //console.log('RIGHT');
       object.setVelocity('x', 5);
     }
-  })
+  }})
 
-  backend.connection.on('keyUp', (direction) => {
+  Store.commit('beOn', { method: 'keyUp', action: (direction) => {
     if (direction == 'left' || direction == 'right') {
       object.setVelocity('x', 0);
     } else if (direction == 'down') {
       object.setVelocity('y', 0);
     }
-  })
+  }});
 }
 
 export default {

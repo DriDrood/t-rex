@@ -1,16 +1,14 @@
 <template>
 <themeSwitch/>
-  <mainMenu v-if="displayPage=='main'"/>
+  <lobby v-if="gameId != null" />
+  <mainMenu v-else-if="displayPage=='main'"/>
   <join v-else-if="displayPage=='join'"/>
   <host v-else-if="displayPage=='host'"/>
-  <lobby v-else-if="displayPage=='lobby'"/>
   <game v-else-if="displayPage=='game'"/>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-
-import backend from './backend.js'
 
 import mainMenu from "./vue/pages/mainMenu.vue"
 import host from "./vue/pages/host.vue"
@@ -32,10 +30,20 @@ export default {
     lobby
   },
   computed: {
-   ...mapState(['displayPage'])
+   ...mapState(['displayPage', 'gameId'])
   },
-  async mounted() {
-    await backend.start();
+  mounted() {
+    this.$store.dispatch('beInit');
+
+    if (window.location.search) {
+      var gameId = window.location.search.substring(1)
+        .split('&')
+        .map(p => p.split('='))
+        .find(p => p[0] == 'gameId')?.[1];
+
+      if (gameId)
+        this.$store.dispatch('join', { gameId });
+    }
   }
 }
 </script>

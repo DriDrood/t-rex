@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import backend from '../../backend.js'
 import validations from '../../validations.js'
 
 export default {

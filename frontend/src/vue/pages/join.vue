@@ -4,10 +4,8 @@
     <h2>JOIN</h2>
     <div class="joinInput">
       <span v-if="err" class="errText">{{ errText }}</span>
-      <p>Nickname:</p>
-      <input v-model="nickname" type="text" maxlength="10" placeholder="MrHat">
       <p>Lobby ID:</p>
-      <input v-model="lobbyID" type="number" pattern="\d*" maxlength="6" placeholder="123456">
+      <input v-model="lobbyID" type="text" pattern="[0-9a-f]*" placeholder="ad5aa1bf-7b5c-4ef2-bea7-ffbe2aad50f6">
     </div>
     <div class="joinButtons">
       <button class="joinButton" @click="changePage('main')">Back</button>
@@ -16,10 +14,8 @@
   </div>
 </div>
 </template>
-<script>
-import backend from '../../backend.js'
-import validations from '../../validations.js'
 
+<script>
 export default {
   name: 'join',
   data: () => ({
@@ -33,18 +29,12 @@ export default {
       this.$store.commit("changeDisplayPage", newPage);
     },
     joinLobby() {
-      this.err = false;
-      let payload = validations.verifyJoin(this.nickname, this.lobbyID);
-      if (payload.success) {
-        backend.joinLobby(this.nickname, this.lobbyID);
-      } else {
-        this.err = true;
-        this.errText = payload.message;
-      }
+      this.$store.dispatch('join', { gameId: this.lobbyID });
     }
   }
 }
 </script>
+
 <style>
 .joinContainer {
   display: flex;
