@@ -6,8 +6,6 @@ public class Game
         Id = Guid.NewGuid();
         Master = master;
         Players = new();
-
-        Players.Add(master);
     }
 
     public Guid Id { get; }

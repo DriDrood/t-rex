@@ -3,19 +3,24 @@ using T_rex.Backend.Models;
 namespace T_rex.Backend.Repositories;
 public class GameRepository
 {
-    public GameRepository()
+    public GameRepository(IServiceProvider serviceProvider)
     {
-        _connectionMap = new();
+        _serviceProvider = serviceProvider;
         _gameMap = new();
     }
 
-    private readonly Dictionary<string, Guid> _connectionMap;
+    private readonly IServiceProvider _serviceProvider;
     private readonly Dictionary<Guid, Game> _gameMap;
 
     public Game Create(Player master)
     {
+        ConnectionRepository connectionRepository = _serviceProvider.Get<ConnectionRepository>();
+
         Game newGame = new(master);
         _gameMap[newGame.Id] = newGame;
+
+        connectionRepository.Join(master, newGame);
+        
         return newGame;
     }
 

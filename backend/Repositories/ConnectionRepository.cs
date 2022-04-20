@@ -17,6 +17,10 @@ public class ConnectionRepository
         Game game = _gameRepository.Get(gameId)
             ?? throw new Exception("Game not found");
 
+        Join(player, game);
+    }
+    public void Join(Player player, Game game)
+    {
         game.Players.Add(player);
         player.Game = game;
     }
