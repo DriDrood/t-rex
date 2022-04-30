@@ -3,5 +3,5 @@ public record Player
 (
     string Id,
     string Nickname,
-    bool Master
+    bool Master = false
 );

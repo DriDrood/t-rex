@@ -9,7 +9,7 @@ export default createStore({
     playerId: null,
     masterId: null,
     players: {},
-    hallOfFame: [{name: "Dumba", score: 4513}, {name: "Fukl", score: 3238}, {name: "Kuba", score: 2314}, {name: "Tomas", score: 456}, {name: "Honza", score: 404}]
+    hallOfFame: [],
   },
   mutations: {
     changeDisplayPage(state, newPage) {
@@ -55,6 +55,9 @@ export default createStore({
     },
     startGame(state) {
       state.displayPage = "game";
+    },
+    hallOfFame(state, payload) {
+      state.hallOfFame = payload;
     }
   },
   actions: {
@@ -77,7 +80,7 @@ export default createStore({
       context.dispatch('beSend', { method: 'setNickname', payload: payload.nickname });
     },
     loadHallOfFame: (context) => {
-      context.dispatch('beSend', { method: 'getHallOfFame' });
+      context.dispatch('beSend', { method: 'getHallOfFame' }, action => context.commit('hallOfFame', data));
     },
     listenLobby: (context) => {
       context.commit('beOn', { method: 'playerRenamed', action: data => context.commit('playerRenamed', data) });

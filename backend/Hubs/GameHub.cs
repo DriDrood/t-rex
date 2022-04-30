@@ -68,4 +68,9 @@ public class GameHub : Hub
         string playerId = Context.ConnectionId;
         await Clients.All.SendAsync("ReceiveMessage", direction, playerId);
     }
+
+    public async Task GetHallOfFame()
+    {
+        await Clients.Caller.SendAsync("getHallOfFame");
+    }
 }
