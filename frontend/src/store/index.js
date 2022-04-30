@@ -7,6 +7,7 @@ export default createStore({
     theme: "light",
     gameID: null,
     playerId: null,
+    masterId: null,
     players: {},
     hallOfFame: [{name: "Dumba", score: 4513}, {name: "Fukl", score: 3238}, {name: "Kuba", score: 2314}, {name: "Tomas", score: 456}, {name: "Honza", score: 404}]
   },
@@ -33,16 +34,18 @@ export default createStore({
     playerJoined(state, payload) {
       state.players[payload.id] = { nickname: payload.nickname, master: payload.master };
     },
+    // playerId, masterId
     playerLeft(state, payload) {
       // it is me!
-      if (payload == state.playerId) {
+      if (payload.playerId == state.playerId) {
         state.gameId = null;
         state.playerId = null;
         state.players = {};
         return;
       }
 
-      delete state.players[payload];
+      delete state.players[payload.playerId];
+      state.masterId = payload.masterId;
     },
     // gameId, playerId, players
     joined(state, payload) {

@@ -7,7 +7,7 @@
       Players:
       <div v-for="player in players" :key="player.id"><img v-if="player.master" src="/images/crown.svg">{{ player.nickname }}</div>
     </p>
-    <button @click="leave">Leave</button>
+    <button class="lobby-button" @click="leave">Leave</button>
   </div>
 </div>
 </template>

@@ -40,8 +40,6 @@ export default {
   text-align: right;
 }
 .hallOfFame-text{
-  margin-left: 10px;
-  margin-right: 10px;
-  padding: 0;
+  margin: 2px 10px;
 }
 </style>
