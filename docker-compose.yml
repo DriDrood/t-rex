@@ -14,17 +14,15 @@ services:
     build: backend
     image: t-rex-multiplayer-backend
     restart: "${RESTART}"
-  #   depends_on:
-  #     - db
-  # db:
-  #   image: "mariadb:10.3"
-  #   ports:
-  #     - "3306:3306"
-  #   restart: "${RESTART}"
-  #   volumes:
-  #     - ./DB:/var/lib/mysql
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-  #     MYSQL_USER: "${MYSQL_USER}"
-  #     MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
-  #   command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_czech_ci']
+    depends_on:
+      - db
+  db:
+    image: "mariadb:10.7.3"
+    ports:
+      - "3306:3306"
+    restart: "${RESTART}"
+    volumes:
+      - ./DB:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_czech_ci']
