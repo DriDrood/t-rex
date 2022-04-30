@@ -1,11 +1,11 @@
 <template>
-<div class="row">
-  <div class="hostContainer">
+<div class="page">
+  <div class="host-container">
     <h1>Host</h1>
     <p v-if="err" class="errText">{{ errText }}</p>
     <p>Nickname: <input v-model="nickname"></p>
-    <button @click="changePage('main')">Back</button>
-    <button @click="createLobby">Create lobby</button>
+    <button class="button-primary" @click="changePage('main')">Back</button>
+    <button class="button-primary" @click="createLobby">Create lobby</button>
   </div>
 </div>
 </template>
@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style>
-.hostContainer {
+.host-container {
   display: flex;
   justify-content: center;
   align-items: center;

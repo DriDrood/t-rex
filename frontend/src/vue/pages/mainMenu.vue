@@ -1,10 +1,10 @@
 <template>
-<div class="row">
-  <div class="mainMenuContainer">
+<div class="page">
+  <div class="main-menu-container">
     <h1>T-rex multiplayer</h1>
-    <div class="mainMenuButtons">
-      <button class="mainButton" @click="changePage('join')">Join</button>
-      <button class="mainButton" @click="host">Host</button>
+    <div class="buttons-container">
+      <button class="button-primary" @click="changePage('join')">Join</button>
+      <button class="button-primary" @click="host">Host</button>
     </div>
   </div>
   <hallOfFame/>
@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style>
-.mainMenuContainer {
+.main-menu-container {
   font-size: 1.4rem;
   text-align: center;
   width: 80%;
@@ -39,44 +39,7 @@ export default {
   margin-top: 20vh;
 }
 
-.mainMenuContainer h1 {
+.main-menu-container h1 {
   font-size: 2.5em;
-}
-
-.mainMenuButtons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8rem;
-  margin: 4rem;
-}
-
-.mainButton {
-  font-size: 1.2em;
-  background: var(--button-background-color);
-  border-radius: 0;
-  border: 5px solid var(--font-color);
-  padding: .75em 2em;
-}
-
-.mainButton:active {
-  transform: translateY(5px);
-}
-
-@media screen and (max-width: 640px) {
-.mainMenuContainer {
-  font-size: 1rem;
-  }
-.mainMenuButtons {
-  flex-direction: column;
-  font-size: 1.2rem;
-  gap: 3rem;
-  }
-}
-@media screen and (max-width: 430px){
-  .mainMenuContainer{
-    font-size: .75em;
-    width: 90%;
-  }
 }
 </style>

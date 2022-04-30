@@ -1,5 +1,5 @@
 <template>
-  <div class="switchTheme" @click="switchTheme()">
+  <div class="switch-theme" @click="switchTheme()">
     <img :src="`/assets/images/${image}.png`" :alt="image">
   </div>
 </template>
@@ -29,7 +29,7 @@ export default {
 
 </script>
 <style>
-.switchTheme {
+.switch-theme {
   width: 50px;
   margin: 10px;
 }
