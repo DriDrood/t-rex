@@ -16,9 +16,12 @@ public class GameHub : Hub
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         _gameHelper.Init(Context);
-
+        await Clients.All.SendAsync("playerLeft", new PlayerLeft
+        (
+            _gameHelper.PlayerId,
+            _gameHelper.Game.Master.Id
+        ));
         _gameHelper.LeaveGame();
-        await Clients.All.SendAsync("playerLeft", _gameHelper.Player.Id);
 
         await base.OnDisconnectedAsync(exception);
     }
@@ -36,16 +39,20 @@ public class GameHub : Hub
         _gameHelper.Init(Context);
         
         _gameHelper.JoinGame(gameId);
-        await Clients.Caller.SendAsync("joined", new Joined(_gameHelper.PlayerId, _gameHelper.Game!.Players.ToDictionary(p => p.Id, p => new JoinedPlayer(p.Nickname))));
-        await Clients.Others.SendAsync("playerJoined", new Models.Dto.Player(_gameHelper.Player.Id, _gameHelper.Player.Nickname));
+        await Clients.Caller.SendAsync("joined", new Joined(_gameHelper.PlayerId, _gameHelper.Game!.Players.ToDictionary(p => p.Id, p => new JoinedPlayer(p.Nickname)), _gameHelper.Game!.Master.Id));
+        await Clients.Others.SendAsync("playerJoined", new Models.Dto.Player(_gameHelper.Player.Id, _gameHelper.Player.Nickname, _gameHelper.Player.Id == _gameHelper.Game!.Master.Id));
     }
 
     public async Task LeaveGame()
     {
         _gameHelper.Init(Context);
-        
+        var masterId = _gameHelper.Game!.Master.Id;
         _gameHelper.LeaveGame();
-        await Clients.All.SendAsync("playerLeft", _gameHelper.Player.Id);
+        await Clients.All.SendAsync("playerLeft", new PlayerLeft
+        (
+            _gameHelper.PlayerId,
+            masterId 
+        ));
     }
 
     public async Task SetNickname(string nickname)
