@@ -1,15 +1,15 @@
 <template>
-<div class="row">
-  <div class="joinContainer">
+<div class="page">
+  <div class="join-container">
     <h2>JOIN</h2>
-    <div class="joinInput">
+    <div class="join-input-container">
       <span v-if="err" class="errText">{{ errText }}</span>
       <p>Lobby ID:</p>
-      <input v-model="lobbyID" type="text" pattern="[0-9a-f]*" placeholder="ad5aa1bf-7b5c-4ef2-bea7-ffbe2aad50f6">
+      <input class="join-input" v-model="lobbyID" type="text" pattern="[0-9a-f]*" placeholder="ad5aa1bf-7b5c-4ef2-bea7-ffbe2aad50f6">
     </div>
-    <div class="joinButtons">
-      <button class="joinButton" @click="changePage('main')">Back</button>
-      <button class="joinButton" @click="joinLobby">Enter</button>
+    <div class="buttons-container">
+      <button class="button-primary" @click="changePage('main')">Back</button>
+      <button class="button-primary" @click="joinLobby">Enter</button>
     </div>
   </div>
 </div>
@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style>
-.joinContainer {
+.join-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,64 +48,27 @@ export default {
   margin-top: 15vh;
 }
 
-.joinContainer h2 {
+.join-container h2 {
   font-size: 2.5em;
-  padding-bottom: 1rem;
+  padding-bottom: 3rem;
 }
 
-.joinContainer p {
+.join-container p {
   font-size: .75em;
   text-align: left;
 }
 
-.joinInput {
+.join-input-container {
+  display: flex;
+  flex-direction: column;
   gap: .75rem;
-  margin-top: 1rem;
-  width: 70%;
+  max-width: 800px;
+  width: 100%;
 }
 
-input {
+.join-input {
   color: #091A28;
   font-size: .75em;
-  width: 100%;
   border: 3px solid var(--font-color);
-  margin-bottom: 1rem;
-}
-
-.joinButtons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8rem;
-  margin-top: 3rem;
-}
-
-.joinButton {
-  font-size: 1.2em;
-  background: var(--button-background-color);
-  border-radius: 0;
-  border: 5px solid var(--font-color);
-  padding: .75em 2em;
-}
-
-.joinButton:active {
-  transform: translateY(4px);
-}
-
-@media screen and (max-width: 640px) {
-.joinContainer {
-  font-size: 1rem;
-  }
-.joinButtons {
-  flex-direction: column;
-  font-size: 1.2rem;
-  gap: 3rem;
-  }
-}
-@media screen and (max-width: 430px){
-  .joinContainer{
-    font-size: .75em;
-    width: 90%;
-  }
 }
 </style>

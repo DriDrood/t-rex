@@ -1,16 +1,16 @@
 <template>
-<div class="row">
-  <div class="mainMenuContainer">
+<div class="page">
+  <div class="lobby-container">
     <h1>Lobby</h1>
     <p>Join link: <a :href="joinLink" target="_blank">Here</a></p>
     <p>Nickname:</p>
     <input v-model="nickname" type="text" maxlength="10" placeholder="MrHat" />
-    <button @click="setNickname">Change nickname</button>
+    <button class="lobby-button" @click="setNickname">Change nickname</button>
     <p>
       Players:
       <div v-for="player in players" :key="player.id">{{ player.nickname }}</div>
     </p>
-    <button @click="leave">Leave</button>
+    <button class="lobby-button" @click="leave">Leave</button>
   </div>
 </div>
 </template>
@@ -45,16 +45,4 @@ export default {
 </script>
 
 <style>
-button {
-  font-size: 1.2em;
-  background: var(--button-background-color);
-  border-radius: 0;
-  border: 5px solid var(--font-color);
-  padding: 0.75em 2em;
-  margin: 0.5em;
-}
-
-button:active {
-  transform: translateY(4px);
-}
 </style>

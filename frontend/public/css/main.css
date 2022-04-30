@@ -6,8 +6,8 @@
 
 [theme="dark"] {
   --font-color: #c9c8b8;
-  --error-red-color: #a30000;
   --app-background-color: #091A28;
+  --error-red-color: #a30000;
 }
 
 * {
