@@ -28,5 +28,5 @@ public class PlayerRepository
     }
 
     private static readonly string[] NOUNS = new string[] { "elephant", "charlady", "ladybug", "octocat", "Kevin" };
-    private static readonly string[] ADJECTIVES = new string[] { "smart", "dummy", "pritty", "green", "global" };
+    private static readonly string[] ADJECTIVES = new string[] { "smart", "dummy", "pretty", "green", "global" };
 }
