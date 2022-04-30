@@ -1,3 +1,5 @@
+import store from "./store/index.js";
+
 const verifyNick = (nickname) => {
   if (nickname.length < 3) {
     return {sucess: false, message: 'Nickname must be at least 3 characters long'};
@@ -10,11 +12,14 @@ const verifyNick = (nickname) => {
   }
 }
 
-const verifyLobbyID = (lobbyID) => {
+const verifyLobbyID = async (lobbyID, nickname) => {
   if (lobbyID == null) {
     return {success: false, message: 'Lobby ID is required'};
   } else {
-    return {success: true, message: ''}
+    store.dispatch('join', { gameId: lobbyID, nickname });
+    return new Promise((resolve, reject) => {
+      context.commit('beOn', { method: 'joined', action: data => resolve(data) });
+    });
   }
 }
 
@@ -25,7 +30,7 @@ const verifyJoin = (nickname, lobbyID) => {
   if (nick.success && lobby.success) {
     return {success: true, message: ''};
   } else {
-    return {success: false, message: nick.message + ' ' + lobby.message};
+    return {success: false, message: nick.message + ' <br> ' + lobby.message};
   }
 }
 

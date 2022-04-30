@@ -6,6 +6,8 @@
       <span v-if="err" class="errText">{{ errText }}</span>
       <p>Lobby ID:</p>
       <input v-model="lobbyID" type="text" pattern="[0-9a-f]*" placeholder="ad5aa1bf-7b5c-4ef2-bea7-ffbe2aad50f6">
+      <p>Nickname:</p>
+      <input v-model="nickname" type="text" pattern="^[a-zA-Z0-9]+$" placeholder="Your nickname">
     </div>
     <div class="joinButtons">
       <button class="joinButton" @click="changePage('main')">Back</button>
@@ -16,6 +18,8 @@
 </template>
 
 <script>
+import validations from '../../validations.js';
+
 export default {
   name: 'join',
   data: () => ({
@@ -28,8 +32,14 @@ export default {
     changePage(newPage) {
       this.$store.commit("changeDisplayPage", newPage);
     },
-    joinLobby() {
-      this.$store.dispatch('join', { gameId: this.lobbyID });
+    async joinLobby() {
+      let response = await validations.verifyJoin(this.nickname, this.lobbyID)
+      if (response.success) {
+        this.changePage('lobby');
+      } else {
+        this.err = true;
+        this.errText = response.message;
+      }
     }
   }
 }

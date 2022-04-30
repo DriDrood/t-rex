@@ -1,9 +1,9 @@
 <template>
 <themeSwitch/>
-  <lobby v-if="gameId != null" />
-  <mainMenu v-else-if="displayPage=='main'"/>
+  <mainMenu v-if="displayPage=='main'"/>
   <join v-else-if="displayPage=='join'"/>
   <host v-else-if="displayPage=='host'"/>
+  <lobby v-else-if="displayPage=='lobby'" />
   <game v-else-if="displayPage=='game'"/>
 </template>
 

@@ -5,7 +5,7 @@ export default createStore({
   state: {
     displayPage: "main",
     theme: "light",
-    gameId: null,
+    gameID: null,
     playerId: null,
     players: {},
     hallOfFame: [{name: "Dumba", score: 4513}, {name: "Fukl", score: 3238}, {name: "Kuba", score: 2314}, {name: "Tomas", score: 456}, {name: "Honza", score: 404}]
@@ -31,7 +31,7 @@ export default createStore({
     },
     // id, nickname
     playerJoined(state, payload) {
-      state.players[payload.id] = { nickname: payload.nickname };
+      state.players[payload.id] = { nickname: payload.nickname, master: payload.master };
     },
     playerLeft(state, payload) {
       // it is me!
@@ -49,6 +49,9 @@ export default createStore({
       state.players = payload.players;
       state.playerId = payload.playerId;
       state.gameId = payload.gameId;
+    },
+    startGame(state) {
+      state.displayPage = "game";
     }
   },
   actions: {
@@ -77,6 +80,7 @@ export default createStore({
       context.commit('beOn', { method: 'playerRenamed', action: data => context.commit('playerRenamed', data) });
       context.commit('beOn', { method: 'playerJoined', action: data => context.commit('playerJoined', data) });
       context.commit('beOn', { method: 'playerLeft', action: data => context.commit('playerLeft', data) });
+      context.commit('beOn', { method: 'startGame', action: data => context.commit('startGame') });
     },
   },
   modules: {
