@@ -23,14 +23,14 @@ const verifyLobbyID = async (lobbyID, nickname) => {
   }
 }
 
-const verifyJoin = (nickname, lobbyID) => {
+const verifyJoin = async (nickname, lobbyID) => {
   let nick = verifyNick(nickname);
-  let lobby = verifyLobbyID(lobbyID);
+  let lobby = await verifyLobbyID(lobbyID);
 
   if (nick.success && lobby.success) {
     return {success: true, message: ''};
   } else {
-    return {success: false, message: nick.message + ' <br> ' + lobby.message};
+    return {success: false, message: `${nick.message} <br> ${lobby.message}`};
   }
 }
 

@@ -3,7 +3,7 @@
   <div class="join-container">
     <h2>JOIN</h2>
     <div class="join-input-container">
-      <span v-if="err" class="errText">{{ errText }}</span>
+      <span v-if="err" v-html="errText" class="errText"></span>
       <p>Lobby ID:</p>
       <input v-model="lobbyID" type="text" pattern="[0-9a-f]*" placeholder="ad5aa1bf-7b5c-4ef2-bea7-ffbe2aad50f6">
       <p>Nickname:</p>
