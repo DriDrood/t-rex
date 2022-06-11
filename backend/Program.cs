@@ -10,6 +10,7 @@ builder.Services.AddSingleton<ConnectionRepository>();
 builder.Services.AddSingleton<GameRepository>();
 builder.Services.AddSingleton<PlayerRepository>();
 builder.Services.AddScoped<GameManager>();
+builder.Services.AddScoped<HallOfFameManager>();
 
 WebApplication app = builder.Build();
 app.UseRouting();

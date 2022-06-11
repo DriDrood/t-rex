@@ -6,12 +6,14 @@ using T_rex.Backend.Models.Dto;
 namespace T_rex.Backend.Hubs;
 public class GameHub : Hub
 {
-    public GameHub(GameManager gameHelper)
+    public GameHub(GameManager gameHelper, HallOfFameManager hallOfFameManager)
     {
         _gameHelper = gameHelper;
+        _hallOfFameManager = hallOfFameManager;
     }
 
     private readonly GameManager _gameHelper;
+    private readonly HallOfFameManager _hallOfFameManager;
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
@@ -71,6 +73,7 @@ public class GameHub : Hub
 
     public async Task GetHallOfFame()
     {
-        await Clients.Caller.SendAsync("getHallOfFame");
+        var topScores = _hallOfFameManager.GetTop(50);
+        await Clients.Caller.SendAsync("hallOfFame", topScores);
     }
 }
