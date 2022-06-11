@@ -1,38 +1,25 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace T_rex.Backend;
-public class Startup
+public static class StartupExntension
 {
-    public Startup(IConfiguration configuration)
+    public static void Setup(this WebApplication app)
     {
-        Configuration = configuration;
+        // scoped
+        using (IServiceScope serviceScope = app.Services
+            .GetRequiredService<IServiceScopeFactory>()
+            .CreateScope())
+        {
+            serviceScope.ServiceProvider.GetService<Database.DB>()!.Database.Migrate();
+        }
     }
 
-    public IConfiguration Configuration { get; }
-
-    // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
+    public static void AddDb(this IServiceCollection self)
     {
-        services.AddSignalR();
-        services.AddDbContext<Database.DB>(opt => opt.UseMySql(GetConnectionString(), ServerVersion.Parse("10.7.3-mariadb")));
-
-        services.AddSingleton<Repositories.ConnectionRepository>();
-        services.AddSingleton<Repositories.GameRepository>();
-        services.AddSingleton<Repositories.PlayerRepository>();
-
-        services.AddScoped<Managers.GameManager>();
-    }
-
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        app.UseRouting();
-        app.UseEndpoints(endpoints => endpoints.MapHub<Hubs.GameHub>("/api/game"));
-
-        Setup(app, env);
+        self.AddDbContext<Database.DB>(opt => opt.UseMySql(GetConnectionString(), ServerVersion.Parse("10.7.3-mariadb")));
     }
     
-    private string GetConnectionString()
+    private static string GetConnectionString()
     {
         // get config from env
         string host = Environment.GetEnvironmentVariable("MYSQL_HOST")
@@ -43,16 +30,5 @@ public class Startup
             ?? throw new Exception("Missing MYSQL_ROOT_PASSWORD");
 
         return $"server={host};port={port};database=trex;user=root;password={password}";
-    }
-    
-    private void Setup(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        // scoped
-        using (IServiceScope serviceScope = app.ApplicationServices
-            .GetRequiredService<IServiceScopeFactory>()
-            .CreateScope())
-        {
-            serviceScope.ServiceProvider.GetService<Database.DB>()!.Database.Migrate();
-        }
     }
 }

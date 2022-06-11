@@ -1,6 +1,18 @@
 using T_rex.Backend;
+using T_rex.Backend.Hubs;
+using T_rex.Backend.Managers;
+using T_rex.Backend.Repositories;
 
-Host.CreateDefaultBuilder(args)
-    .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
-    .Build()
-    .Run();
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSignalR();
+builder.Services.AddDb();
+builder.Services.AddSingleton<ConnectionRepository>();
+builder.Services.AddSingleton<GameRepository>();
+builder.Services.AddSingleton<PlayerRepository>();
+builder.Services.AddScoped<GameManager>();
+
+WebApplication app = builder.Build();
+app.UseRouting();
+app.UseEndpoints(endpoints => endpoints.MapHub<GameHub>("/api/game"));
+app.Setup();
+app.Run();
