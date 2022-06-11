@@ -2,10 +2,7 @@
   <p>Hall of Fame</p>
   <div class="hallOfFame-container">
     <div class="hallOfFame-names">
-      <p v-for="(player, index) in hallOfFame" class="hallOfFame-text">{{ index+1 }}.{{ player.name }}</p>
-    </div>
-    <div class="hallOfFame-scores">
-      <p v-for="player in hallData" class="hallOfFame-text">{{ player.score }}m</p>
+      <p v-for="(player, index) in hallOfFame" class="hallOfFame-text">{{ index+1 }}.{{ player.nickname }}: {{ player.score }}</p>
     </div>
   </div>
 </template>

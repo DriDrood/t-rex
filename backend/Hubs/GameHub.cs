@@ -18,12 +18,15 @@ public class GameHub : Hub
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         _gameHelper.Init(Context);
-        await Clients.All.SendAsync("playerLeft", new PlayerLeft
-        (
-            _gameHelper.PlayerId,
-            _gameHelper.Game.Master.Id
-        ));
-        _gameHelper.LeaveGame();
+        if (_gameHelper.Game is not null)
+        {
+            await Clients.All.SendAsync("playerLeft", new PlayerLeft
+            (
+                _gameHelper.PlayerId,
+                _gameHelper.Game.Master.Id
+            ));
+            _gameHelper.LeaveGame();
+        }
 
         await base.OnDisconnectedAsync(exception);
     }

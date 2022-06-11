@@ -80,7 +80,8 @@ export default createStore({
       context.dispatch('beSend', { method: 'setNickname', payload: payload.nickname });
     },
     loadHallOfFame: (context) => {
-      context.dispatch('beSend', { method: 'getHallOfFame' }, action => context.commit('hallOfFame', data));
+      context.commit('beOn', { method: 'hallOfFame', action: data => context.commit('hallOfFame', data)})
+      context.dispatch('beSend', { method: 'getHallOfFame' });
     },
     listenLobby: (context) => {
       context.commit('beOn', { method: 'playerRenamed', action: data => context.commit('playerRenamed', data) });

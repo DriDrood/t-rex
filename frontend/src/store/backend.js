@@ -5,6 +5,7 @@ export default {
     connection: null,
     listeners: new Set(),
     queue: [],
+    listenersQueue: [],
   },
   mutations: {
     beCreateConnection: (state) => {
@@ -18,6 +19,11 @@ export default {
       if (state.listeners.has(payload.method))
         return;
 
+      if (state.connection == null) {
+        state.listenersQueue.push(payload);
+        return;
+      }
+
       state.listeners.add(payload.method);
       state.connection.on(payload.method, payload.action);
     },
@@ -30,6 +36,11 @@ export default {
     beInit: async (context) => {
       context.commit('beCreateConnection');
       await context.state.connection.start();
+
+      while (context.state.listenersQueue.length) {
+        const item = context.state.listenersQueue.pop();
+        context.commit('beOn', item);
+      }
 
       while (context.state.queue.length) {
         const item = context.state.queue.pop();
