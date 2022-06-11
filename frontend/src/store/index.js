@@ -18,7 +18,7 @@ export default createStore({
       state.displayPage = newPage;
     },
     raiseError(state, payload) {
-      state.errors.push({code: payload.code, message: payload.message + state.errCount});
+      state.errors.push(payload);
       state.errCount++;
       setTimeout(() => state.errors.shift(), 5000);
     },

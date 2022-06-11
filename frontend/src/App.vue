@@ -1,7 +1,6 @@
 <template>
 <errorBox/>
 <themeSwitch/>
-<button @click="displayError">displayError</button>
 <mainMenu v-if="displayPage=='main'"/>
 <join v-else-if="displayPage=='join'"/>
 <host v-else-if="displayPage=='host'"/>
