@@ -5,6 +5,8 @@ export default createStore({
   state: {
     displayPage: "main",
     theme: "light",
+    errCount: 0,
+    errors: [],
     gameID: null,
     playerId: null,
     masterId: null,
@@ -14,6 +16,11 @@ export default createStore({
   mutations: {
     changeDisplayPage(state, newPage) {
       state.displayPage = newPage;
+    },
+    raiseError(state, payload) {
+      state.errors.push({code: payload.code, message: payload.message + state.errCount});
+      state.errCount++;
+      setTimeout(() => state.errors.shift(), 5000);
     },
     switchTheme(state, newTheme) {
       state.theme = newTheme;

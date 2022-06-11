@@ -1,10 +1,12 @@
 <template>
+<errorBox/>
 <themeSwitch/>
-  <mainMenu v-if="displayPage=='main'"/>
-  <join v-else-if="displayPage=='join'"/>
-  <host v-else-if="displayPage=='host'"/>
-  <lobby v-else-if="displayPage=='lobby'" />
-  <game v-else-if="displayPage=='game'"/>
+<button @click="displayError">displayError</button>
+<mainMenu v-if="displayPage=='main'"/>
+<join v-else-if="displayPage=='join'"/>
+<host v-else-if="displayPage=='host'"/>
+<lobby v-else-if="displayPage=='lobby'" />
+<game v-else-if="displayPage=='game'"/>
 </template>
 
 <script>
@@ -18,10 +20,12 @@ import lobby from "./vue/pages/lobby.vue"
 import game from "./vue/pages/game.vue"
 
 import themeSwitch from './vue/components/themeSwitch.vue';
+import errorBox from './vue/components/errorBox.vue';
 
 export default {
   name: 'App',
   components: {
+    errorBox,
     mainMenu,
     game,
     themeSwitch,
@@ -31,6 +35,11 @@ export default {
   },
   computed: {
    ...mapState(['displayPage', 'gameId'])
+  },
+  methods: {
+    displayError() {
+      this.$store.commit("raiseError", {code: "error", message: "error message"});
+    }
   },
   mounted() {
     this.$store.dispatch('beInit');
