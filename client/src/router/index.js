@@ -6,6 +6,11 @@ const routes = [
     path: '/',
     name: 'mainMenu',
     component: mainMenu
+  },
+  {
+    path: '/join',
+    name: 'join',
+    component: () => import('@/pages/join.vue')
   }
 ]
 
