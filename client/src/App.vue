@@ -1,57 +1,30 @@
 <template>
-<button @click="store.plusCounter();">Here: {{ counter }}</button>
+  <nav>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
+  </nav>
+  <router-view/>
 </template>
 
-<script lang="ts">
-import { useMainStore } from '@/stores/main';
-import { computed } from 'vue';
+<style lang="scss">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-export default {
-  name: 'app',
-  setup() {
-    // pinia
-    const store = useMainStore();
-    const counter = computed(() => store.counter);
-    return {
-      counter,
-      store,
-    };
+nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
   }
-}
-
-</script>
-
-<style>
-.errText {
-  font-size: 0.5em;
-  color: red;
-}
-
-.page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.button-primary {
-  font-size: 1.2em;
-  background: var(--button-background-color);
-  border-radius: 0;
-  border: 5px solid var(--font-color);
-  padding: 0.75em 2em;
-  margin: 0.5em;
-}
-
-.button-primary:active {
-  transform: translateY(4px);
-}
-
-.buttons-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8rem;
-  margin: 3rem 0;
 }
 </style>
