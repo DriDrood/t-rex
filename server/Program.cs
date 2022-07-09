@@ -1,6 +1,6 @@
 using trex.Database;
 using trex.Hubs;
-using trex.Models;
+using Trex.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDb();
