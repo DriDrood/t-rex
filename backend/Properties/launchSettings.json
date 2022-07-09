@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "T_rex.Backend": {
+    "trex": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
