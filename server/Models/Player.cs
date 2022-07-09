@@ -1,4 +1,4 @@
-namespace trex.Models;
+namespace Trex.Models;
 
 public class Player
 {
@@ -61,7 +61,7 @@ public class Player
         // check if player is on the ground
         if (Position.y < 0 + trex.height / 2 || (Position.y == 0 + trex.height / 2 && keyDownPressed))
         {
-            trex.chrouch = true;
+            trex.crouch = true;
             Velocity.y = 0;
             Position.y = 0 + trex.height / 2;
         }

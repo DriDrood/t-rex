@@ -1,4 +1,4 @@
-namespace trex.Models;
+namespace Trex.Models;
 public class Lobby
 {
     public Guid Id { get; set; }
