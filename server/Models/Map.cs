@@ -1,4 +1,4 @@
-namespace T_rex.Backend.Models;
+namespace T_rex.Models;
 
 public class Map
 {
