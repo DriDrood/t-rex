@@ -2,13 +2,13 @@ namespace trex.Models;
 
 public class Player
 {
-    public Guid id;
+    public Guid Id;
     public string name { get; set; }
-    public int score { get; set; }
+    public int Score { get; set; }
     public Player(string _name)
     {
         this.name = _name;
-        this.score = 0;
+        this.Score = 0;
         this.id = Guid.NewGuid();
     }
 }
