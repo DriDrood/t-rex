@@ -5,21 +5,23 @@
   <h1 class="main-title">T-rex Multiplayer</h1>
 
   <div class="main-buttons">
-    <button @click="changePage('join')" class="primary-button">Join</button>
-    <button @click="changePage('host')" class="primary-button">Host</button>
+    <button @click="this.$router.push('/join')" class="primary-button">Join</button>
+    <button @click="this.$router.push('/host')" class="primary-button">Host</button>
   </div>
+
+  <hallOfFame/>
+
 </div>
  
 </template>
 
 <script>
+import hallOfFame from '@/components/hallOfFame.vue'
 
 export default {
   name: 'mainMenu',
-  methods: {
-    changePage(newPage) {
-      this.$router.push(`/${newPage}`);
-    }
+  components: {
+    hallOfFame
   }
 }
 
