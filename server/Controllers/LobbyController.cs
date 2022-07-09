@@ -13,8 +13,8 @@ public class LobbyController : Controller
     public Guid Create(string playerName)
     {
         Lobby lobby = new Lobby(new Player(playerName));
-        lobbies.Add(lobby.id, lobby);
-        return lobby.id;// Create lobby
+        lobbies.Add(lobby.Id, lobby);
+        return lobby.Id;// Create lobby
     }
     [HttpPost("[action]")]
     public void Join(Guid lobbyId, string playerName)
