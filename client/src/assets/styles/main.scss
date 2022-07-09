@@ -11,13 +11,19 @@ $primary-font-color: #000;
   height: 80px;
   width: 250px;
   font-size: 25px;
-  border: solid black 4px ;
+  border: solid black 4px;
   background-color: transparent;
-  transition: all 0.2s;
+  transition: all 0.3s;
   &:hover {
     background-color: rgba(189, 189, 189, 0.897);
+    // transform: translateY(+5px);
   }
   &:active {
     transform: translateY(+10px);
   }
+}
+
+.primary-errMsg {
+  color: #e70303;
+  font-weight: 600;
 }
