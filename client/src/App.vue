@@ -1,59 +1,24 @@
 <template>
-<errorBox/>
-<themeSwitch/>
-<mainMenu v-if="displayPage=='main'"/>
-<join v-else-if="displayPage=='join'"/>
-<host v-else-if="displayPage=='host'"/>
-<lobby v-else-if="displayPage=='lobby'" />
-<game v-else-if="displayPage=='game'"/>
+<button @click="store.plusCounter();">Here: {{ counter }}</button>
 </template>
 
-<script>
-import { mapState } from 'vuex';
-
-import mainMenu from "./vue/pages/mainMenu.vue"
-import host from "./vue/pages/host.vue"
-import join from "./vue/pages/join.vue"
-
-import lobby from "./vue/pages/lobby.vue"
-import game from "./vue/pages/game.vue"
-
-import themeSwitch from './vue/components/themeSwitch.vue';
-import errorBox from './vue/components/errorBox.vue';
+<script lang="ts">
+import { useMainStore } from '@/stores/main';
+import { computed } from 'vue';
 
 export default {
-  name: 'App',
-  components: {
-    errorBox,
-    mainMenu,
-    game,
-    themeSwitch,
-    join,
-    host,
-    lobby
-  },
-  computed: {
-   ...mapState(['displayPage', 'gameId'])
-  },
-  methods: {
-    displayError() {
-      this.$store.commit("raiseError", {code: "error", message: "error message"});
-    }
-  },
-  mounted() {
-    this.$store.dispatch('beInit');
-
-    if (window.location.search) {
-      var gameId = window.location.search.substring(1)
-        .split('&')
-        .map(p => p.split('='))
-        .find(p => p[0] == 'gameId')?.[1];
-
-      if (gameId)
-        this.$store.dispatch('join', { gameId });
-    }
+  name: 'app',
+  setup() {
+    // pinia
+    const store = useMainStore();
+    const counter = computed(() => store.counter);
+    return {
+      counter,
+      store,
+    };
   }
 }
+
 </script>
 
 <style>
