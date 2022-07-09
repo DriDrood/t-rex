@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using trex.Models;
+using Trex.Models;
 namespace trex.Controllers;
 [ApiController]
 [Route("api/[controller]")]
