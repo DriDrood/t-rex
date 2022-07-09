@@ -1,4 +1,4 @@
-namespace T_rex.Models;
+namespace Trex.Models;
 
 public class Map
 {
