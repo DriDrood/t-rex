@@ -1,8 +1,8 @@
 version: "3"
 services:
-  frontend:
-    build: frontend
-    image: t-rex-multiplayer-frontend
+  client:
+    build: client
+    image: t-rex-multiplayer-client
     restart: "${RESTART}"
     ports:
       - "80:80"
@@ -10,9 +10,9 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - backend
-  backend:
-    build: backend
-    image: t-rex-multiplayer-backend
+  server:
+    build: server
+    image: t-rex-multiplayer-server
     restart: "${RESTART}"
     depends_on:
       - db
