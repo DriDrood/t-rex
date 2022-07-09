@@ -11,4 +11,5 @@ public class Player
         this.Score = 0;
         this.Id = Guid.NewGuid();
     }
+    public Position Position { get; set; }
 }
