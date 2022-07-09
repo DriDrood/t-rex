@@ -1,13 +1,12 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-
+import { createRouter, createWebHistory } from 'vue-router'
 import mainMenu from '@/pages/mainMenu.vue'
 
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'mainMenu',
     component: mainMenu
-  },
+  }
 ]
 
 const router = createRouter({
