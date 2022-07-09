@@ -2,15 +2,16 @@ namespace Trex.Models;
 
 public class Player
 {
-    public Guid Id;
-    public string name { get; set; }
-    public int Score { get; set; }
-    public Player(string _name)
+    public Player(string name)
     {
-        this.name = _name;
+        this.name = name;
         this.Score = 0;
         this.Id = Guid.NewGuid();
     }
+
+    public Guid Id;
+    public string name { get; set; }
+    public int Score { get; set; }
     public Position Position { get; set; }
     public Position Velocity { get; set; }
 

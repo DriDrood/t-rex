@@ -2,10 +2,10 @@ namespace Trex.Models;
 
 public class Map
 {
-    public Map(HashSet<Player> players)
+    public Map(IEnumerable<Player> players)
     {
         Obstacles = new List<Obstacle>();
-        Players = Players;
+        Players = new HashSet<Player>(players);
     }
     public List<Obstacle> Obstacles { get; }
     public HashSet<Player> Players { get; }

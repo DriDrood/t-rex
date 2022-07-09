@@ -10,8 +10,8 @@ public class Obstacle
     }
 
     public Guid Id { get; }
-    public int X { get; }
-    public int Y { get; }
+    public int X { get; set; }
+    public int Y { get; set; }
     public ObstacleType Type { get; }
 
     public class ObstacleType
@@ -36,6 +36,22 @@ public class Obstacle
         public static ObstacleType Bird1 = new ObstacleType("Bird_1", 60, 10);
         public static ObstacleType Bird2 = new ObstacleType("Bird_2", 40, 10);
         public static ObstacleType Bird3 = new ObstacleType("Bird_3", 20, 10);
-    
+
+        public static ObstacleType[] All => new ObstacleType[]
+        {
+            Small0,
+            Small1,
+            Small2,
+            Big0,
+            Big1,
+            Big2,
+            Bird1,
+            Bird2,
+            Bird3,
+        };
+        public static ObstacleType GetRandom()
+        {
+            return All[Random.Shared.Next(All.Length)];
+        }
     }
 }

@@ -14,12 +14,18 @@ services:
     build: server
     image: t-rex-multiplayer-server
     restart: "${RESTART}"
+    ports:
+      - "8090:80"
+    environment:
+      MYSQL_HOST: "${MYSQL_HOST}"
+      MYSQL_PORT: "${MYSQL_PORT}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
     depends_on:
       - db
   db:
     image: "mariadb:10.7.3"
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT}:3306"
     restart: "${RESTART}"
     volumes:
       - ./DB:/var/lib/mysql

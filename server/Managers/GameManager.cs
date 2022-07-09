@@ -21,14 +21,13 @@ public class GameManager
         foreach (Obstacle obstacle in Map.Obstacles)
         {
             obstacle.X -= speed;
-            if (speed < maxSpeed) speed += 0.001;
+            if (speed < maxSpeed) speed += 1;
         }
     }
     public void AddObstacle()
     {
-        Random rnd = new Random();
-        int x = Map.Obstacles.last().X + rnd.next(150, 600);
+        int x = Map.Obstacles.Last().X + Random.Shared.Next(150, 600);
         int y = 0;
-        Map.Obstacles.Add(new Obstacle(x, y, type));
+        Map.Obstacles.Add(new Obstacle(x, y, Obstacle.ObstacleType.GetRandom()));
     }
 }
