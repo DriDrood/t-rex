@@ -9,6 +9,6 @@ public class Player
     {
         this.name = _name;
         this.Score = 0;
-        this.id = Guid.NewGuid();
+        this.Id = Guid.NewGuid();
     }
 }
