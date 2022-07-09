@@ -1,9 +1,10 @@
+namespace Trex.Models;
 public class Trex
 {
-    public bool chrouch { get; set; }
-    public int width => chrouch ? 30 : 14;
-    public int height => chrouch ? 20 : 22;
+    public bool crouch { get; set; }
+    public int width => crouch ? 30 : 14;
+    public int height => crouch ? 20 : 22;
 
-    public int collisionRadius => chrouch ? 7 : 10;
+    public int collisionRadius => crouch ? 7 : 10;
     
 }
