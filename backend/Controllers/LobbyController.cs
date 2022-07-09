@@ -21,4 +21,9 @@ public class LobbyController : Controller
     {
         lobbies[lobbyId].AddPlayer(new Player(playerName));// Add player to lobby
     }
+    [HttpGet("[action]")]
+    public void Delete(Guid lobbyId)
+    {
+        lobbies.Remove(lobbyId);// Delete lobby
+    }
 }
