@@ -8,15 +8,21 @@ namespace trex.Controllers;
 [Route("api/[controller]")]
 public class HallOfFameController : Controller
 {
-    static List<PlayerResult> hallOfFame = new List<PlayerResult>();
+    DB _db;
+    public HallOfFameController(DB db)
+    {
+        _db = db;
+    }
+
     [HttpPost("[action]")]
     public void AddResult(PlayerResult result)
     {
-        hallOfFame.Add(result);
+        _db.Add(result);
+        _db.SaveChanges();
     }
     [HttpGet("[action]")]
     public List<PlayerResult> GetTop(int count)
     {
-        return hallOfFame.OrderByDescending(r => r.Score).Take(count).ToList();
+        return _db.PlayerResults.OrderByDescending(r => r.Score).Take(count).ToList();
     }
 }
