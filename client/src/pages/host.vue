@@ -14,12 +14,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'host',
   data: () => ({
     nickname: '',
     errMsg: ''
   }),
+  computed: {
+    ...mapState(['lobbyId']),
+  },
   methods: {
     createLobby() {
       const validNickname = /\w{3,15}$/.test(this.nickname);
@@ -28,7 +33,7 @@ export default {
       } else if (validNickname) {
         this.errMsg = "";
         this.$store.dispatch('createLobby', this.nickname);
-        this.$router.push('/game');
+        this.$router.push(`/lobby/${this.lobbyId}`);
       }
     }
   }

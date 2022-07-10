@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'join',
   data() {
@@ -26,6 +28,9 @@ export default {
       lobbyId: '',
       errMsg: ""
     }
+  },
+  computed: {
+    ...mapState(['lobbyId']),
   },
   methods: {
     joinLobby() {
@@ -36,7 +41,7 @@ export default {
         // console.log('Nickname is valid');
         this.errMsg = "";
         this.$store.dispatch('joinLobby', { nickname: this.nickname, lobbyId: this.lobbyId });
-        this.$router.push('/game');
+        this.$router.push(`/lobby/${this.lobbyId}`);
       }
     }
   }
