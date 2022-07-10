@@ -6,5 +6,5 @@ public class Trex
     public int height => crouch ? 20 : 22;
 
     public int collisionRadius => crouch ? 7 : 10;
-    
+
 }

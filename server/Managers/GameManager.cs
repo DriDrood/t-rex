@@ -24,8 +24,9 @@ public class GameManager
             Task _ = Task.Run(Tick);
         }
 
-        await _clients.SendAsync("gameEnded");
+         await _clients.SendAsync("gameEnded");   
     }
+
 
     public async Task Tick()
     {
@@ -34,6 +35,20 @@ public class GameManager
         AddScore();
         await _clients.SendAsync("tick", new { });
     }
+
+    public void CircleCollision(Player player)
+    {
+        foreach (var obstacle in Map.Obstacles)
+        {
+            if (Math.Pow((obstacle.Position.X- player.Position.X),2)+ Math.Pow((obstacle.Position.Y- player.Position.Y),2) < Math.Pow((obstacle.Type.CollisionRadius+ player.trex.collisionRadius),2))
+            {
+                player.Score = Score;
+                break;
+            }
+        }
+    }
+
+
 
     public void MoveObstacles()
     {
