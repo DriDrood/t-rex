@@ -1,18 +1,18 @@
 <template>
 
-<div class="main-main">
+  <div class="main-main">
 
-  <h1 class="main-title">T-rex Multiplayer</h1>
+    <h1 class="main-title">T-rex Multiplayer</h1>
 
-  <div class="main-buttons">
-    <button @click="this.$router.push('/join')" class="btn primary-button">Join</button>
-    <button @click="this.$router.push('/host')" class="btn primary-button">Host</button>
+    <div class="main-buttons primary-input-gap ">
+      <button @click="this.$router.push('/join')" class="btn primary-button">Join</button>
+      <button @click="this.$router.push('/host')" class="btn primary-button">Host</button>
+    </div>
+
+    <hallOfFame />
+
   </div>
 
-  <hallOfFame/>
-
-</div>
- 
 </template>
 
 <script>
@@ -29,7 +29,6 @@ export default {
 
 
 <style lang="scss">
-
 .main-main {
   display: flex;
   flex-direction: column;
@@ -42,10 +41,4 @@ export default {
   font-size: 80px;
   margin: 50px;
 }
-
-.main-buttons {
-  display: flex;
-  gap: 100px;
-}
-
 </style>
