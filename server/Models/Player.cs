@@ -12,7 +12,7 @@ public class Player
     public Guid Id { get; }
     public string ConnectionId { get; set; }
     public string name { get; set; }
-    public int Score { get; set; }
+    public double Score { get; set; }
     public Position Position { get; set; }
     public Velocity Velocity { get; set; }
 

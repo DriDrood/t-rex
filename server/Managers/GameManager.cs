@@ -42,7 +42,7 @@ public class GameManager
         {
             if (Math.Pow((obstacle.Position.X- player.Position.X),2)+ Math.Pow((obstacle.Position.Y- player.Position.Y),2) < Math.Pow((obstacle.Type.CollisionRadius+ player.trex.collisionRadius),2))
             {
-                player.Score = Score;
+                player.Score = CurrentScore;
                 break;
             }
         }
@@ -56,17 +56,17 @@ public class GameManager
 
         foreach (Obstacle obstacle in Map.Obstacles)
         {
-            obstacle.X -= Speed;
+            obstacle.Position.X -= Speed;
             if (Speed < maxSpeed) Speed += 0.001;
         }
     }
     public void AddObstacle()
     {
-        if (Map.Obstacles.Last().X < 600)
+        if (Map.Obstacles.Last().Position.X < 600)
         {
-            int x = Map.Obstacles.Last().X + Random.Shared.Next(150, 600);
+            double x = Map.Obstacles.Last().Position.X + Random.Shared.Next(150, 600);
             Obstacle.ObstacleType obstacleType = Obstacle.ObstacleType.GetRandom();
-            int y = obstacleType.Height / 2;
+            double y = obstacleType.Height / 2;
             Map.Obstacles.Add(new Obstacle(x, y, Obstacle.ObstacleType.GetRandom()));
         }
     }
