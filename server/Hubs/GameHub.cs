@@ -9,21 +9,27 @@ namespace trex.Hubs;
 public class GameHub : Hub
 {
     private static Dictionary<string, GameManager> _games = new();
-    private static int x = 50;
-    private static int y = 50;
 
-    public Task KeyPressed(KeysIn keys)
+    public async Task KeyPressed(KeysIn keys)
     {
-        if (keys.Down)
-            y -= 5;
-        if (keys.Up)
-            y += 5;
-        if (keys.Left)
-            x -= 5;
-        if (keys.Right)
-            x += 5;
+        Lobby lobby = LobbyController.Lobbies.Values.FirstOrDefault(l => l.Players.Any(p => p.ConnectionId == Context.ConnectionId));
+        if (lobby == null)
+        {
+            await Clients.Caller.SendAsync("error", new ErrorOut { Code = "noLobby", Message = "Invalid lobbyId" });
+            return;
+        }
 
-        return Clients.Caller.SendAsync("position", new { x, y });
+        Player player = lobby.Players.FirstOrDefault(p => p.ConnectionId == Context.ConnectionId);
+        if (player == null)
+        {
+            await Clients.Caller.SendAsync("error", new ErrorOut { Code = "notConnected", Message = "You are not connected" });
+            return;
+        }
+
+        player.keyDownPressed = keys.Down;
+        player.keyUpPressed = keys.Up;
+        player.keyLeftPressed = keys.Left;
+        player.keyRightPressed = keys.Right;
     }
 
     public async Task JoinGame(Guid playerId)
@@ -55,7 +61,7 @@ public class GameHub : Hub
             await Clients.Caller.SendAsync("error", new ErrorOut { Code = "noLobby", Message = "Invalid lobbyId" });
             return;
         }
-        
+
         Player player = lobby.Players.FirstOrDefault(p => p.ConnectionId == Context.ConnectionId);
         if (player == null)
         {
