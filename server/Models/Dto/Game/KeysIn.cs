@@ -1,4 +1,4 @@
-namespace trex.Models.Dto;
+namespace trex.Models.Dto.Game;
 
 public class KeysIn
 {

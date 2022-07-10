@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.SignalR;
-using trex.Models;
-using trex.Models.Dto;
+using trex.Controllers;
+using trex.Models.Dto.Game;
+using Trex.Models;
 
 namespace trex.Hubs;
 
 public class GameHub : Hub
-{
-    
+{   
     private static int x = 50;
     private static int y = 50;
 
@@ -24,8 +24,22 @@ public class GameHub : Hub
         return Clients.Caller.SendAsync("position", new { x, y });
     }
 
-    public async Task JoinGame(string gameId)
+    public async Task JoinGame(Guid lobbyId, Guid playerId)
     {
-        await Groups.AddToGroupAsync(Context.ConnectionId, gameId);
+        if (!LobbyController.Lobbies.TryGetValue(lobbyId, out Lobby lobby))
+        {
+            await Clients.Caller.SendAsync("error", new ErrorOut { Message = "Invalid lobbyId" });
+            return;
+        }
+
+        Player player = lobby.Players.FirstOrDefault(p => p.Id == playerId);
+        if (player == null)
+        {
+            await Clients.Caller.SendAsync("error", new ErrorOut { Message = "Invalid playerId" });
+            return;
+        }
+
+        player.ConnectionId = Context.ConnectionId;
+        await Groups.AddToGroupAsync(Context.ConnectionId, lobby.Id.ToString());
     }
 }

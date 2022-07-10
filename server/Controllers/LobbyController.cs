@@ -7,14 +7,14 @@ namespace trex.Controllers;
 [Route("api/[controller]")]
 public class LobbyController : Controller
 {
-    public static Dictionary<Guid, Lobby> lobbies = new Dictionary<Guid, Lobby>();
+    public static Dictionary<Guid, Lobby> Lobbies = new Dictionary<Guid, Lobby>();
 
     [HttpPost("[action]")]
     public CreateOut Create(CreateIn param)
     {
-        Player player = new Player(param.PlayerName);
+        Player player = new Player(param.Nickname);
         Lobby lobby = new Lobby(player);
-        lobbies.Add(lobby.Id, lobby);
+        Lobbies.Add(lobby.Id, lobby);
 
         return new CreateOut
         {
@@ -24,14 +24,33 @@ public class LobbyController : Controller
     }
 
     [HttpPost("[action]")]
-    public void Join(Guid lobbyId, string playerName)
+    public ActionResult<JoinOut> Join(JoinIn param)
     {
-        lobbies[lobbyId].AddPlayer(new Player(playerName));// Add player to lobby
+        if (!Lobbies.TryGetValue(param.LobbyId, out Lobby lobby))
+            return BadRequest("Wrong lobbyId");
+
+        if (lobby.Players.Any(p => p.name == param.Nickname))
+            return BadRequest("Player name is already taken");
+
+        Player player = new Player(param.Nickname);
+        lobby.AddPlayer(player);
+
+        return Ok(new JoinOut
+        {
+            PlayerId = player.Id,
+            Players = lobby.Players
+                .Select(p => new JoinOutPlayer
+                {
+                    Nickname = p.name,
+                    IsMaster = lobby.Master.Id == p.Id
+                })
+                .ToArray()
+        });
     }
-    
+
     [HttpGet("[action]")]
     public void Delete(Guid lobbyId)
     {
-        lobbies.Remove(lobbyId);// Delete lobby
+        Lobbies.Remove(lobbyId);// Delete lobby
     }
 }

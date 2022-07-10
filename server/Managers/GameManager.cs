@@ -9,6 +9,7 @@ public class GameManager
         Map = new Map(_lobby.Players);
     }
 
+    public string ConnectionGroupName => _lobby.Id.ToString();
     public Map Map;
     private Lobby _lobby;
 

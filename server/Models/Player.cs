@@ -9,7 +9,8 @@ public class Player
         this.Id = Guid.NewGuid();
     }
 
-    public Guid Id;
+    public Guid Id { get; }
+    public string ConnectionId { get; set; }
     public string name { get; set; }
     public int Score { get; set; }
     public Position Position { get; set; }
@@ -29,11 +30,11 @@ public class Player
     {
         CalculateXVelocity();
         CalculateYVelocity();
-        
+
         updatePosition();
     }
 
-    public void CalculateXVelocity() 
+    public void CalculateXVelocity()
     {
         if (keyLeftPressed && !keyRightPressed)
         {
@@ -54,7 +55,8 @@ public class Player
         else if (keyDownPressed && !keyUpPressed)
         {
             Velocity.y -= 2;
-        }else
+        }
+        else
         {
             Velocity.y -= 1;
         }
@@ -75,10 +77,11 @@ public class Player
             Velocity.x = 0;
             Position.x = 0 + trex.width / 2;
 
-        }else if (Position.x > 600 - trex.width / 2)
+        }
+        else if (Position.x > 600 - trex.width / 2)
         {
             Velocity.x = 0;
-            Position.x = 600 - trex.width/2;
+            Position.x = 600 - trex.width / 2;
         }
 
 
