@@ -1,6 +1,5 @@
 using trex.Database;
 using trex.Hubs;
-using Trex.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDb();
@@ -8,8 +7,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
+// remove on production
+builder.Services.AddCors(opt => opt.AddPolicy("any", policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
 
 var app = builder.Build();
+// remove on production
+app.UseCors("any");
 app.MigrateDb();
 app.UseSwagger();
 app.UseSwaggerUI();
