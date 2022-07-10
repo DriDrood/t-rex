@@ -16,15 +16,15 @@ public class Obstacle
 
     public class ObstacleType
     {
-        private ObstacleType(string name, int width, int collisionRadius)
+        private ObstacleType(string name, int height, int collisionRadius)
         {
             Name = name;
-            Width = width;
+            Height = height;
             CollisionRadius = collisionRadius;
         }
 
         public string Name { get; }
-        public int Width { get; }
+        public int Height { get; }
         public int CollisionRadius { get; }
 
         public static ObstacleType Small0 = new ObstacleType("small_0", 12, 4);

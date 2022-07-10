@@ -9,7 +9,8 @@ public class GameManager
         _clients = clients.Group(lobby.Id.ToString());
         Map = new Map(lobby.Players);
     }
-
+    public int CurrentScore;
+    public int Speed = 5;
     private readonly IClientProxy _clients;
     public Map Map;
     public bool IsRunning => Map.Players.Any(p => p.Score == 0);
@@ -26,24 +27,34 @@ public class GameManager
 
     public async Task Tick()
     {
+        MoveObstacles();
+        AddObstacle();
+        AddScore();
         await _clients.SendAsync("tick", new { });
     }
 
-    public void MoveObstacles(int numberOfTicks)
+    public void MoveObstacles()
     {
-        int speed = 5;
         const int maxSpeed = 13;
 
         foreach (Obstacle obstacle in Map.Obstacles)
         {
             obstacle.X -= speed;
-            if (speed < maxSpeed) speed += 1;
+            if (speed < maxSpeed) speed += 0.001;
         }
     }
     public void AddObstacle()
     {
-        int x = Map.Obstacles.Last().X + Random.Shared.Next(150, 600);
-        int y = 0;
-        Map.Obstacles.Add(new Obstacle(x, y, Obstacle.ObstacleType.GetRandom()));
+        if (Map.Obstacles.Last().X < 600)
+        {
+            int x = Map.Obstacles.Last().X + Random.Shared.Next(150, 600);
+            Obstacle.ObstacleType obstacleType = Obstacle.ObstacleType.GetRandom();
+            int y = obstacleType.Height / 2;
+            Map.Obstacles.Add(new Obstacle(x, y, Obstacle.ObstacleType.GetRandom()));
+        }
+    }
+    public void AddScore()
+    {
+        CurrentScore += Speed;
     }
 }
