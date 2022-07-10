@@ -5,14 +5,14 @@ public class Player
     public Player(string name)
     {
         this.name = name;
-        this.Score = 0;
         this.Id = Guid.NewGuid();
     }
 
     public Guid Id { get; }
+    public bool IsAlive => Score == null;
     public string ConnectionId { get; set; }
     public string name { get; set; }
-    public double Score { get; set; }
+    public double? Score { get; set; }
     public Position Position { get; set; }
     public Velocity Velocity { get; set; }
 

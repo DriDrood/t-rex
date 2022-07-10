@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.SignalR;
+using trex.Models.Dto.Game;
 using Trex.Models;
 
 namespace Trex.Managers;
@@ -13,7 +14,7 @@ public class GameManager
     public double Speed = 5;
     private readonly IClientProxy _clients;
     public Map Map;
-    public bool IsRunning => Map.Players.Any(p => p.Score == 0);
+    public bool IsRunning => Map.Players.Any(p => p.IsAlive);
 
     public async void Start()
     {
@@ -33,7 +34,13 @@ public class GameManager
         MoveObstacles();
         AddObstacle();
         AddScore();
-        await _clients.SendAsync("tick", new { });
+        
+        await _clients.SendAsync("tick", new Tick
+        {
+            PlayerPositions = Map.Players.ToDictionary(p => p.Id, p => new TickPlayerPosition { X = p.Position.X, Y = p.Position.Y, Score = p.Score ?? CurrentScore }),
+            ObstaclePositions = Map.Obstacles.Select(o => new TickObstaclePosition { Type = o.Type.Name, X = o.Position.X, Y = o.Position.Y }).ToArray(),
+            Speed = Speed,
+        });
     }
 
     public void CircleCollision(Player player)
