@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { createStore } from 'vuex'
 const url = "http://54.37.72.116:8090"
 
@@ -39,7 +38,7 @@ export default createStore({
       const response = await axios.post(`${url}/api/lobby`, { nickname: state.user.nickname })
       commit('saveLobby', response.data)
     },
-    joinLobby({ state, commit }) {
+    async joinLobby({ state, commit }) {
       const response = await axios.post(`${url}/api/join`, { lobbyId: state.lobbyId, nickname: state.nickname })
       commit('setplayers', response.data)
     },
