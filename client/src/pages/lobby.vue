@@ -33,7 +33,9 @@ export default {
   },
   methods: {
     invite() {
-      navigator.clipboard.writeText(this.lobbyId);
+      let url = `${window.location.protocol}//${window.location.hostname}`
+      navigator.clipboard.writeText(`${url}/join/${this.lobbyId}`);
+      this.$store.commit('displayInfo', {type: 'info', text: 'Invite link copied to clipboard'});
     }
   }
 }

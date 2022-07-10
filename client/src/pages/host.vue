@@ -2,13 +2,12 @@
   <div class="host-main">
     <h2 class="title2-primary">Host</h2>
     <div class="host-inputs">
-      <span v-if="errMsg !== ''" class="primary-errMsg">{{ errMsg }}</span>
       <p>Nickname:</p>
-      <input class="primary-input" type="text" placeholder="nickname" v-model="nickname" pattern="\w{3,15}" />
+      <input v-model="nickname" class="primary-input" type="text" placeholder="nickname" pattern="\w{3,15}" />
     </div>
     <div class="host-btn primary-input-gap ">
-      <button class="primary-button btn" @click="this.$router.push('/')">Back</button>
-      <button class="primary-button btn" @click="createLobby()">Host</button>
+      <button @click="this.$router.push('/')" class="primary-button btn">Back</button>
+      <button @click="createLobby()" class="primary-button btn">Host</button>
     </div>
   </div>
 </template>
@@ -20,7 +19,6 @@ export default {
   name: 'host',
   data: () => ({
     nickname: '',
-    errMsg: ''
   }),
   computed: {
     ...mapState(['lobbyId']),
@@ -29,9 +27,8 @@ export default {
     createLobby() {
       const validNickname = /\w{3,15}$/.test(this.nickname);
       if (!validNickname) {
-        this.errMsg = "Name is not valid";
+        this.$store.commit('displayInfo', {type: 'error', text: 'Invalid nickname'});
       } else if (validNickname) {
-        this.errMsg = "";
         this.$store.dispatch('createLobby', this.nickname);
         this.$router.push(`/lobby/${this.lobbyId}`);
       }
