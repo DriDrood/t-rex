@@ -1,17 +1,17 @@
 <template>
 
-<div class="hall-main">
-  <h4>Hall of fame</h4>
-  <br>
-  <div>
-    <p v-if="!highScores">Loading...</p>
-    <div v-else v-for="(player, index) in highScores" class="hall-score">
-      <p>{{ index + 1 }}.{{ player.Name }}</p>
-      <p>{{ player.Score }}</p>
+  <div class="hall-main">
+    <h4>Hall of fame</h4>
+    <br>
+    <div>
+      <p v-if="!highScores">Loading...</p>
+      <div v-else v-for="(player, index) in highScores" :key="index" class="hall-score">
+        <p>{{ index + 1 }}.{{ player.nickname }}</p>
+        <p>{{ player.score }}</p>
+      </div>
     </div>
+    <button @click="this.$router.push('/halloffame')" class="hall-button">Show more</button>
   </div>
-  <button @click="this.$router.push('/halloffame')" class="hall-button">Show more</button>
-</div>
 
 </template>
 
@@ -22,8 +22,11 @@ export default {
   name: "hallOfFame",
   computed: {
     highScores() {
-      return [{ Name: "Dumba", Score: "2048"}, { Name: "ManLuke", Score: "512"}, { Name: "Honza", Score: "404"}, { Name: "I have a long name :D :)", Score: "300"}]
+      return this.$store.state.hallOfFame.players
     }
+  },
+  mounted() {
+    this.$store.dispatch("loadHallOfFame")
   }
 }
 
@@ -31,7 +34,6 @@ export default {
 
 
 <style lang="scss">
-
 .hall-main {
   margin: 30px;
   padding: 10px;
@@ -51,9 +53,9 @@ export default {
   padding: 5px;
   margin: 10px;
   transition: all 0.2s;
+
   &:hover {
     background-color: rgba(189, 189, 189, 0.897);
   }
 }
-
 </style>
