@@ -13,10 +13,15 @@ $primary-font-color: #000;
 }
 
 .btn {
-  cursor: pointer;
   font-size: 25px;
   border: solid black 4px;
   background-color: transparent;
+}
+
+.primary-button {
+  height: 80px;
+  width: 250px;
+  cursor: pointer;
   transition: all 0.3s;
   &:hover {
     background-color: rgba(189, 189, 189, 0.897);
@@ -25,11 +30,6 @@ $primary-font-color: #000;
   &:active {
     transform: translateY(+10px);
   }
-}
-
-.primary-button {
-  height: 80px;
-  width: 250px;
 }
 
 .primary-errMsg {
