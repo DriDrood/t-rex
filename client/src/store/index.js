@@ -3,12 +3,13 @@ const url = "http://54.37.72.116:8090"
 
 export default createStore({
   state: {
+    messages: [],
     user: {
       nickname: '',
       playerId: ''
     },
     lobbyId: '',
-    players: null,
+    players: [],
     hallOfFame: {
       players: [],
       count: 5
@@ -18,8 +19,17 @@ export default createStore({
     getHallOfFame: (state) => {
       return state.hallOfFame
     },
+    isMaster: (state) => {
+      return state.players.find(player => player.isMaster)?.nickname == state.user.nickname
+    }
   },
   mutations: {
+    displayInfo: (state, payload) => {
+      state.messages.push(payload);
+      setTimeout(() => {
+        state.messages.shift();
+      }, 5000)
+    },
     saveLobby: (state, payload) => {
       state.lobbyId = payload.lobbyId
       state.user.playerId = payload.playerId
