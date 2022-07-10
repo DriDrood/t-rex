@@ -1,7 +1,7 @@
 namespace Trex.Models;
 public class Obstacle
 {
-    public Obstacle(int x, int y, ObstacleType type)
+    public Obstacle(double x, double y, ObstacleType type)
     {
         Id = Guid.NewGuid();
         X = x;
@@ -10,13 +10,13 @@ public class Obstacle
     }
 
     public Guid Id { get; }
-    public int X { get; set; }
-    public int Y { get; set; }
+    public double X { get; set; }
+    public double Y { get; set; }
     public ObstacleType Type { get; }
 
     public class ObstacleType
     {
-        private ObstacleType(string name, int height, int collisionRadius)
+        private ObstacleType(string name, double height, int collisionRadius)
         {
             Name = name;
             Height = height;
@@ -24,7 +24,7 @@ public class Obstacle
         }
 
         public string Name { get; }
-        public int Height { get; }
+        public double Height { get; }
         public int CollisionRadius { get; }
 
         public static ObstacleType Small0 = new ObstacleType("small_0", 12, 4);
