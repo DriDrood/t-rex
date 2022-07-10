@@ -23,6 +23,8 @@ public class GameManager
             await Task.Delay(20);
             Task _ = Task.Run(Tick);
         }
+
+        await _clients.SendAsync("gameEnded");
     }
 
     public async Task Tick()
