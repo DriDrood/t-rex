@@ -9,8 +9,8 @@ public class GameManager
         _clients = clients.Group(lobby.Id.ToString());
         Map = new Map(lobby.Players);
     }
-    public int CurrentScore;
-    public int Speed = 5;
+    public double CurrentScore;
+    public double Speed = 5;
     private readonly IClientProxy _clients;
     public Map Map;
     public bool IsRunning => Map.Players.Any(p => p.Score == 0);
