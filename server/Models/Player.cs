@@ -14,7 +14,7 @@ public class Player
     public string name { get; set; }
     public int Score { get; set; }
     public Position Position { get; set; }
-    public Position Velocity { get; set; }
+    public Velocity Velocity { get; set; }
 
     //keyes pressed
     public bool keyLeftPressed { get; set; }
@@ -38,58 +38,58 @@ public class Player
     {
         if (keyLeftPressed && !keyRightPressed)
         {
-            Velocity.x = -1;
+            Velocity.X = -1;
         }
         else if (keyRightPressed && !keyLeftPressed)
         {
-            Velocity.x = 1;
+            Velocity.X = 1;
         }
 
     }
     public void CalculateYVelocity()
     {
-        if (keyUpPressed && !keyDownPressed && Position.y == 0 + trex.height / 2)
+        if (keyUpPressed && !keyDownPressed && Position.Y == 0 + trex.height / 2)
         {
-            Velocity.y = 10;
+            Velocity.Y = 10;
         }
         else if (keyDownPressed && !keyUpPressed)
         {
-            Velocity.y -= 2;
+            Velocity.Y -= 2;
         }
         else
         {
-            Velocity.y -= 1;
+            Velocity.Y -= 1;
         }
 
         // check if player is on the ground
-        if (Position.y < 0 + trex.height / 2 || (Position.y == 0 + trex.height / 2 && keyDownPressed))
+        if (Position.Y < 0 + trex.height / 2 || (Position.Y == 0 + trex.height / 2 && keyDownPressed))
         {
             trex.crouch = true;
-            Velocity.y = 0;
-            Position.y = 0 + trex.height / 2;
+            Velocity.Y = 0;
+            Position.Y = 0 + trex.height / 2;
         }
     }
     public void updatePosition()
     {
-        Position.x += Velocity.x;
-        if (Position.x < 0 + trex.width / 2)
+        Position.X += Velocity.X;
+        if (Position.X < 0 + trex.width / 2)
         {
-            Velocity.x = 0;
-            Position.x = 0 + trex.width / 2;
+            Velocity.X = 0;
+            Position.X = 0 + trex.width / 2;
 
         }
-        else if (Position.x > 600 - trex.width / 2)
+        else if (Position.X > 600 - trex.width / 2)
         {
-            Velocity.x = 0;
-            Position.x = 600 - trex.width / 2;
+            Velocity.X = 0;
+            Position.X = 600 - trex.width / 2;
         }
 
 
-        Position.y += Velocity.y;
-        if (Position.y < 0)
+        Position.Y += Velocity.Y;
+        if (Position.Y < 0)
         {
-            Position.y = 0;
-            Velocity.y = 0;
+            Position.Y = 0;
+            Velocity.Y = 0;
         }
     }
 }
