@@ -9,8 +9,8 @@
       <input type="text" placeholder="nickname" v-model="nickname" pattern="\w{3,15}" />
     </div>
     <div class="join-btn">
-      <button class="primary-button" @click="this.$router.push('/')">Back</button>
-      <button class="primary-button" @click="joinLobby()">Join</button>
+      <button class="btn primary-button" @click="this.$router.push('/')">Back</button>
+      <button class="btn primary-button" @click="joinLobby()">Join</button>
     </div>
   </div>
 

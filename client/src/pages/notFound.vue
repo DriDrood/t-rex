@@ -2,7 +2,7 @@
 <div class="main-404">
   <h1 class="title2-primary title-404">404 Not found</h1>
   <img src="/assets/images/404.png" alt="404"/>
-  <button @click="this.$router.push('/')" class="primary-button">Home</button>
+  <button @click="this.$router.push('/')" class="btn primary-button">Home</button>
 </div>
 </template>
 

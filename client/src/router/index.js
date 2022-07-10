@@ -1,16 +1,34 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import mainMenu from '@/pages/mainMenu.vue'
 
 const routes = [
   {
     path: '/',
     name: 'mainMenu',
-    component: mainMenu
+    component: () => import('@/pages/mainMenu.vue')
   },
+
   {
-    path: '/join',
+    path: '/join/:lobbyId?',
     name: 'join',
     component: () => import('@/pages/join.vue')
+  },
+  // {
+  //   path: '/host',
+  //   name: 'host',
+  //   component: () => import('@/pages/host.vue')
+  // }
+  {
+    path: '/lobby/:lobbyId',
+    name: 'lobby',
+    component: () => import('@/pages/lobby.vue')
+  },
+
+
+
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'notFound',
+    component: () => import('@/pages/notFound.vue')
   }
 ]
 

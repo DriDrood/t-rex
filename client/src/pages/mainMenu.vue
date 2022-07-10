@@ -5,8 +5,8 @@
   <h1 class="main-title">T-rex Multiplayer</h1>
 
   <div class="main-buttons">
-    <button @click="this.$router.push('/join')" class="primary-button">Join</button>
-    <button @click="this.$router.push('/host')" class="primary-button">Host</button>
+    <button @click="this.$router.push('/join')" class="btn primary-button">Join</button>
+    <button @click="this.$router.push('/host')" class="btn primary-button">Host</button>
   </div>
 
   <hallOfFame/>
