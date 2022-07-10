@@ -1,18 +1,33 @@
+using Microsoft.AspNetCore.SignalR;
 using Trex.Models;
 
 namespace Trex.Managers;
 public class GameManager
 {
-    public GameManager(Lobby lobby)
+    public GameManager(IHubCallerClients clients, Lobby lobby)
     {
-        _lobby = lobby;
-        Map = new Map(_lobby.Players);
+        _clients = clients.Group(lobby.Id.ToString());
+        Map = new Map(lobby.Players);
     }
 
-    public string ConnectionGroupName => _lobby.Id.ToString();
+    private readonly IClientProxy _clients;
     public Map Map;
-    private Lobby _lobby;
+    public bool IsRunning => Map.Players.Any(p => p.Score == 0);
 
+    public async void Start()
+    {
+        await _clients.SendAsync("gameStarted");
+        while (IsRunning)
+        {
+            await Task.Delay(20);
+            Task _ = Task.Run(Tick);
+        }
+    }
+
+    public async Task Tick()
+    {
+        await _clients.SendAsync("tick", new { });
+    }
 
     public void MoveObstacles(int numberOfTicks)
     {
