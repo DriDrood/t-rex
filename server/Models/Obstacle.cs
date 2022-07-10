@@ -4,15 +4,15 @@ public class Obstacle
     public Obstacle(int x, int y, ObstacleType type)
     {
         Id = Guid.NewGuid();
-        X = x;
-        Y = y;
+        Position = new Position(x, y);
         Type = type;
     }
 
     public Guid Id { get; }
-    public int X { get; set; }
-    public int Y { get; set; }
     public ObstacleType Type { get; }
+
+    public Position Position { get; set; }
+    public Velocity Velocity { get; set; }
 
     public class ObstacleType
     {
