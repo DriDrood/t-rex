@@ -2,15 +2,15 @@
   <div class="join-main">
     <h2>Join</h2>
     <div class="join-input">
-      <span class="primary-errMsg">{{ errMsg }}</span>
+      <span v-if="errMsg !== ''" class="primary-errMsg">{{ errMsg }}</span>
       <p>Lobby id:</p>
-      <input type="text" pattern="[0-9a-f]*" placeholder="ad5aa1bf-7b5c-4ef2-bea7-ffbe2aad50f6" />
+      <input type="text" pattern="[0-9a-f]*" v-model="lobbyId" placeholder="ad5aa1bf-7b5c-4ef2-bea7-ffbe2aad50f6" />
       <p>Nickname:</p>
-      <input type="text" placeholder="nickname" pattern="\w{3,15}" />
+      <input type="text" placeholder="nickname" v-model="nickname" pattern="\w{3,15}" />
     </div>
     <div class="join-btn">
       <button class="primary-button" @click="this.$router.push('/')">Back</button>
-      <button class="primary-button" @click="this.$router.push('')">Join</button>
+      <button class="primary-button" @click="joinLobby()">Join</button>
     </div>
   </div>
 
@@ -21,14 +21,23 @@ export default {
   name: 'join',
   data() {
     return {
-      user: {
-        nickname: '',
-      },
-      errMsg: "Name is not valid"
+      nickname: '',
+      lobbyId: '',
+      errMsg: ""
     }
   },
-  computed: {
-
+  methods: {
+    joinLobby() {
+      const validNickname = /\w{3,15}$/.test(this.nickname);
+      if (!validNickname) {
+        this.errMsg = "Name is not valid";
+      } else if (validNickname) {
+        // console.log('Nickname is valid');
+        this.errMsg = "";
+        this.$store.dispatch('joinLobby', { nickname: this.nickname, lobbyId: this.lobbyId });
+        this.$router.push('/game');
+      }
+    }
   }
 };
 </script>
