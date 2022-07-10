@@ -1,9 +1,9 @@
 <template>
 
 <div class="player-list">
-  <div v-for="player in players" class="player-item">
+  <div v-for="player in players" @click="kick(player)" :class="{ kickable: isMaster && !player.master }" class="btn player-item">
     <img v-if="player.master" src="/assets/images/crown.svg" alt="Master crown"/>
-    <button @click="kick(player)" :class="{ kickable: master }">{{ player.name }}</button>
+    <p>{{ player.nickname }}</p>
   </div>
 </div>
 
@@ -12,13 +12,21 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'playerList',
   computed: {
-    ...mapState(['master']),
-    players() {
-      return [{name: "FreeRefill", master: true}, {name: "Acko", master: false}]
+    ...mapState(['players', 'user']),
+  },
+  getters: {
+    ...mapGetters(['isMaster'])
+  },
+  methods: {
+    kick(player) {
+      if (!player.master) {
+        console.log(`Kicked: ${player.nickname}`)
+      }
     }
   }
 }
@@ -29,6 +37,7 @@ export default {
 <style lang="scss">
 
 .player-list {
+  width: 60%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -37,8 +46,20 @@ export default {
 }
 
 .player-item {
+  height: 60px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 25px;
+   
+  img {
+    width: 50px;
+    margin: 10px;
+  }
+  p {
+    padding: 5px;
+  }
 }
 
 .kickable {

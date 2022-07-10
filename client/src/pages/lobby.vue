@@ -3,15 +3,18 @@
 <div class="lobby-main">
 
   <h2 class="title2-primary">Lobby</h2>
-  <button @click="invite" class="primary-button">Invite players</button>
+  <button @click="invite" class="btn primary-button">Invite players</button>
 
   <playerList/>
+  <button v-if="isMaster">Start Game</button>
 </div>
 
 </template>
 
 
 <script>
+import { mapState } from 'vuex'
+import { mapGetters } from 'vuex';
 import playerList from '@/components/playerList.vue'
 
 export default {
@@ -20,13 +23,17 @@ export default {
     playerList
   },
   computed: {
+    ...mapState(['players', 'user']),
     lobbyId() {
       return this.$route.params.lobbyId;
     }
   },
+  getters: {
+    ...mapGetters(['isMaster'])
+  },
   methods: {
     invite() {
-      navigator.clipboard.writeText("Hello World");
+      navigator.clipboard.writeText(this.lobbyId);
     }
   }
 }
