@@ -36,3 +36,20 @@ $primary-font-color: #000;
   color: #e70303;
   font-weight: 600;
 }
+
+.primary-input {
+  margin: 5px 0;
+  width: 700px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 0;
+  border: solid black 4px;
+}
+
+.primary-input-gap {
+  display: flex;
+  gap: 100px;
+  margin-top: 50px;
+}

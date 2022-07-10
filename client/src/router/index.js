@@ -12,11 +12,11 @@ const routes = [
     name: 'join',
     component: () => import('@/pages/join.vue')
   },
-  // {
-  //   path: '/host',
-  //   name: 'host',
-  //   component: () => import('@/pages/host.vue')
-  // }
+  {
+    path: '/host',
+    name: 'host',
+    component: () => import('@/pages/host.vue')
+  },
   {
     path: '/lobby/:lobbyId',
     name: 'lobby',
