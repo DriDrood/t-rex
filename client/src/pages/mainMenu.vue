@@ -34,6 +34,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   height: 90%;
 }
 

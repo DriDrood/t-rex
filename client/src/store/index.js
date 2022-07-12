@@ -51,15 +51,27 @@ export default createStore({
   },
   actions: {
     async createLobby({ state, commit }, newNickname) {
-      commit('setPlayerNickname', { nickname: newNickname })
-      const response = await axios.post(`${url}/api/lobby`, { nickname: state.user.nickname })
-      commit('saveLobby', response.data)
+      try {
+        const response = await axios.post(`${url}/api/lobby`, { nickname: state.user.nickname })
+        commit('saveLobby', response.data)
+        commit('setPlayerNickname', { nickname: newNickname })
+        this.$router.push(`/lobby/${state.lobbyId}`)
+      }
+      catch (error) {
+        commit('displayInfo', { text: error.message, type: 'error' })
+      }
     },
     async joinLobby({ state, commit }, payload) {
-      commit('setPlayerNickname', payload.nickname)
-      commit('setLobbyId', payload.lobbyId)
-      const response = await axios.post(`${url}/api/join`, { lobbyId: state.lobbyId, nickname: state.nickname })
-      commit('setplayers', response.data)
+      try {
+        const response = await axios.post(`${url}/api/join`, { lobbyId: state.lobbyId, nickname: state.nickname })
+        commit('setplayers', response.data)
+        commit('setPlayerNickname', payload.nickname)
+        commit('setLobbyId', payload.lobbyId)
+        this.$router.push(`/lobby/${state.lobbyId}`)
+      }
+      catch (error) {
+        commit('displayInfo', { text: error.message, type: 'error' })
+      }
     },
     async loadHallOfFame({ state, commit }) {
       const response = await axios.get(`${url}/api/HallOfFame/getTop`)

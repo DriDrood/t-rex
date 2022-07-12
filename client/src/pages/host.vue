@@ -3,7 +3,7 @@
     <h2 class="title2-primary">Host</h2>
     <div class="host-inputs">
       <p>Nickname:</p>
-      <input v-model="nickname" class="primary-input" type="text" placeholder="nickname" pattern="\w{3,15}" />
+      <input v-model="nickname" class="primary-input" type="text" placeholder="nickname" pattern="\w{3,15}" maxlength="" />
     </div>
     <div class="host-btn primary-input-gap ">
       <button @click="this.$router.push('/')" class="primary-button btn">Back</button>
@@ -25,13 +25,7 @@ export default {
   },
   methods: {
     createLobby() {
-      const validNickname = /\w{3,15}$/.test(this.nickname);
-      if (!validNickname) {
-        this.$store.commit('displayInfo', {type: 'error', text: 'Invalid nickname'});
-      } else if (validNickname) {
-        this.$store.dispatch('createLobby', this.nickname);
-        this.$router.push(`/lobby/${this.lobbyId}`);
-      }
+      this.$store.dispatch('createLobby', this.nickname);
     }
   }
 }
