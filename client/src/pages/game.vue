@@ -41,8 +41,12 @@ export default {
   border: 1px solid black /* Development only */
 }
 
-.game * {
+.game-object {
   position: absolute;
+}
+
+.game div {
+  /* background-color: rgba(255, 0, 0, 0.603); */
 }
 
 .game p {

@@ -31,15 +31,18 @@ export default {
     toBeAdded.forEach(id => { // Add
       let object = objects.filter(object => object.id == id)[0];
       let el = document.createElement(object.render.el);
-      el.id = id;
+      let elDiv = document.createElement('div');
+      elDiv.classList.add('game-object');
+      elDiv.id = id;
+      elDiv.appendChild(el);
       
       for (let i in object.render.properties) el[i]=object.render.properties[i];  // Copy object properties
 
       if (object.render.childOf != null) {
         let parent = document.getElementById(object.render.childOf);
-        parent.appendChild(el);
+        parent.appendChild(elDiv);
       } else {
-        this._div.appendChild(el);
+        this._div.appendChild(elDiv);
       }
       this._inRender.push(id);
     })
