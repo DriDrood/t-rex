@@ -9,7 +9,7 @@ export default createStore({
       playerId: ''
     },
     lobbyId: '',
-    players: [],
+    players: [{nickname: 'Acko', isMaster: false}, {nickname: 'FreeRefill', isMaster: true}, {nickname: 'manLuke', isMaster: false}, {nickname: 'Dumba', isMaster: false}, {nickname: 'Squirrellegend', isMaster: false}],
     hallOfFame: {
       players: [],
       count: 5

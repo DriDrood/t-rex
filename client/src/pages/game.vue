@@ -1,0 +1,52 @@
+<template>
+
+<div class="game-main">
+  <div id="game" class="game">
+    <!-- Objects will be insterted here -->
+  </div>
+</div>
+
+</template>
+
+
+<script>
+import game from '@/game-src/gameMain.js'
+
+export default {
+  name: 'game',
+  mounted() {
+    game.addTexturesFolder('/assets/game')
+    game.mountDiv('game');
+    game.start();
+  }
+}
+
+</script>
+
+
+<style>
+
+.game-main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game {
+  width: 600px;
+  height: 150px;
+  position: relative;
+  border: 1px solid black /* Development only */
+}
+
+.game * {
+  position: absolute;
+}
+
+.game p {
+  font-size: 8px;
+}
+
+</style>
