@@ -15,7 +15,6 @@ import game from '@/game-src/gameMain.js'
 export default {
   name: 'game',
   mounted() {
-    game.addTexturesFolder('/assets/game')
     game.mountDiv('game');
     game.start();
   }
@@ -38,7 +37,7 @@ export default {
   width: 600px;
   height: 150px;
   position: relative;
-  border: 1px solid black /* Development only */
+  border: 1px solid black /* Remove in production */
 }
 
 .game-object {

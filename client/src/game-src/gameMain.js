@@ -13,15 +13,17 @@ import Cactus from './objects/gameObjects/cactus.js'
 import Score from './objects/gameObjects/score.js'
 
 function start() {
-  let players = store.state.players.map(player => player.nickname);
-  console.log('players: ' + players)
+  let players = store.state.players.map(player => player.nickname); // Load players from store
+  console.log(`Players: ${players}`)
 
+  // Variables for game objects 
   let trexes = []
   let nicknames = []
-  let scoreText = new Score({x: 510, y: 130}, 0)
+  let scoreText = new Score(450, 135)
 
-  for (let i = 0; i < players.length; i++) {
-    let playersTrex = new Trex(10 + i * 80, 20, players[i])
+  for (let i = 0; i < players.length; i++) { // For each player create new trex (and nickname) next to the previous one
+    let space = 80; // Make smaller in production
+    let playersTrex = new Trex(10 + i * space, 20, players[i])
     trexes.push(playersTrex)
     nicknames.push(new Nickname(playersTrex))
   }
@@ -31,6 +33,8 @@ function start() {
     ...nicknames,
     scoreText
   ];
+
+  objects.forEach(object => object.update()) // Update all objects
 
   render.renderAll(objects)
 
@@ -45,7 +49,6 @@ function mainLoop() {
 }
 
 export default {
-  addTexturesFolder: (path) => {render.addTexturesFolder(path)},
   mountDiv: (divId) => {render.mount(divId)},
   start
 } 

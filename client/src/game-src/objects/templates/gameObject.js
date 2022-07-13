@@ -1,12 +1,9 @@
 import { getuuid } from '../../utils.js'
 export default class GameObject {
-  constructor(renderProperties, childOf=null) {
+  constructor() {
     this.id = getuuid();
-    this.render = {
-      el: renderProperties.el,
-      properties: renderProperties.properties,
-      childOf: childOf
-    }
   }
-  position = {};
+  position = {x: 0, y: 0};
+  parentId = null;
+  update() {};
 }
