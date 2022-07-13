@@ -1,5 +1,5 @@
 // FE modules
-import signalR from '../signalR.js'
+import signalR from '@/signalR.js'
 import store from '@/store/index.js'
 
 // Game engine modules
@@ -14,18 +14,18 @@ import Score from './objects/gameObjects/score.js'
 
 function start() {
   let players = store.state.players.map(player => player.nickname); // Load players from store
-  console.log(`Players: ${players}`)
+  console.log(`Players: ${players}`);
 
   // Variables for game objects 
-  let trexes = []
-  let nicknames = []
-  let scoreText = new Score(450, 135)
+  let trexes = [];
+  let nicknames = [];
+  let scoreText = new Score(450, 135);
 
   for (let i = 0; i < players.length; i++) { // For each player create new trex (and nickname) next to the previous one
     let space = 80; // Make smaller in production
-    let playersTrex = new Trex(10 + i * space, 20, players[i])
-    trexes.push(playersTrex)
-    nicknames.push(new Nickname(playersTrex))
+    let playersTrex = new Trex(10 + i * space, 20, players[i]);
+    trexes.push(playersTrex);
+    nicknames.push(new Nickname(playersTrex));
   }
 
   let objects = [
@@ -34,14 +34,14 @@ function start() {
     scoreText
   ];
 
-  objects.forEach(object => object.update()) // Update all objects
+  objects.forEach(object => object.update()); // Update all objects
 
-  render.renderAll(objects)
+  render.renderAll(objects);
 
-  trexes[3].position.y = 40
-  scoreText.text = `Distance: 5000`
+  trexes[3].position.y = 40;
+  scoreText.text = `Distance: 5000`;
 
-  render.renderAll(objects)
+  render.renderAll(objects);
 }
 
 function mainLoop() {
