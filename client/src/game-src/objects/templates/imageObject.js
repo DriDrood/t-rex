@@ -5,8 +5,8 @@ export default class ImageGameObject extends GameObject {
     super();
     this.render = new RenderModule('img');
     this.imgSrc = '';
-    this.render.update = () => {
-      this.render.properties.el.src = this.imgSrc;
-    }
+  }
+  renderUpdate() {
+    this.render.properties.el.src = this.imgSrc;
   }
 }

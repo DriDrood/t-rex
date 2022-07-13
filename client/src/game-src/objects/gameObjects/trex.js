@@ -1,10 +1,32 @@
 import ImageGameObject from '../templates/imageObject.js'
 
 export default class Trex extends ImageGameObject {
-  constructor(x, y, player) {
+  constructor(x, y, player, isUser=false) {
     super();
-    this.imgSrc = '/assets/game/trex/run/run_0.png';
+    this.state = '';
+    this.isUser = isUser;
+    this.imgSrc = '/assets/game/trex/still.png';
     this.position = {x: x, y: y};
     this.player = player;
+  }
+  renderUpdate() {
+    switch(this.state) {
+      default:
+        this.imgSrc = '/assets/game/trex/still.png';
+        break;
+      case 'still':
+        this.imgSrc = '/assets/game/trex/still.png';
+        break;
+      case 'run':
+        this.imgSrc = '/assets/game/trex/run.gif';
+        break;
+      case 'crouch':
+        this.imgSrc = '/assets/game/trex/crouch.gif';
+        break;
+      case 'jump':
+        this.imgSrc = '/assets/game/trex/jump.png';
+        break;
+    }
+    super.renderUpdate();
   }
 }

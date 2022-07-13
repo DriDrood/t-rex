@@ -5,8 +5,8 @@ export default class TextGameObject extends GameObject {
     super();
     this.render = new RenderModule('p');
     this.text = '';
-    this.render.update = () => {
-      this.render.properties.el.innerHTML = this.text;
-    }
+  }
+  renderUpdate() {
+    this.render.properties.el.innerHTML = this.text;
   }
 }

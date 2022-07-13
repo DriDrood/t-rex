@@ -18,7 +18,7 @@ export default {
     this._div = document.getElementById(divId);
   },
   _updateObject(object) {
-    object.render.update();
+    object.renderUpdate();
     let div = document.getElementById(object.id);
     let el = document.getElementById(`${object.id}-el`);
     for (let i in object.render.properties.div) div[i]=object.render.properties.div[i];  // Copy object properties to div

@@ -14,6 +14,7 @@ import Score from './objects/gameObjects/score.js'
 
 function start() {
   let players = store.state.players.map(player => player.nickname); // Load players from store
+  let userNickname = store.state.user.nickname;
   console.log(`Players: ${players}`);
 
   // Variables for game objects 
@@ -22,8 +23,8 @@ function start() {
   let scoreText = new Score(450, 135);
 
   for (let i = 0; i < players.length; i++) { // For each player create new trex (and nickname) next to the previous one
-    let space = 80; // Make smaller in production
-    let playersTrex = new Trex(10 + i * space, 20, players[i]);
+    let space = 100; // Make smaller in production
+    let playersTrex = new Trex(10 + i * space, 20, players[i], players[i] == userNickname);
     trexes.push(playersTrex);
     nicknames.push(new Nickname(playersTrex));
   }
@@ -39,6 +40,7 @@ function start() {
   render.renderAll(objects);
 
   trexes[3].position.y = 40;
+  trexes[3].state = 'run';
   scoreText.text = `Distance: 5000`;
 
   render.renderAll(objects);
