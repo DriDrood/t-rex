@@ -36,6 +36,7 @@ export default {
 .game {
   width: 600px;
   height: 150px;
+  overflow: hidden;
   position: relative;
   border: 1px solid black /* Remove in production */
 }
