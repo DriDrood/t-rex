@@ -53,8 +53,6 @@ function start() {
     gameOver,
   ];
 
-  objects.forEach(object => object.update()); // Update all objects
-
   render.renderAll(objects);
 
   trexes[3].position.y = 40;

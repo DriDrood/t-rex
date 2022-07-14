@@ -5,6 +5,6 @@ export default class Nickname extends TextGameObject {
     super();
     this.text = trex.player;
     this.parentId = trex.id;
-    this.position = {x: 22.5-((this.text.length / 2) * 8), y: 50}
+    this.position = {x: 32-((this.text.length / 2) * 8), y: 50}
   }
 }
