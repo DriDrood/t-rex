@@ -73,8 +73,8 @@ export default createStore({
         commit('displayInfo', { text: error.message, type: 'error' })
       }
     },
-    async loadHallOfFame({ state, commit }) {
-      const response = await axios.get(`${url}/api/HallOfFame/getTop`)
+    async loadHallOfFame({ state, commit }, payload) {
+      const response = await axios.get(`${url}/api/HallOfFame/getTop?count=${payload??5}`)
       commit('saveHallOfFame', response.data)
     },
   },

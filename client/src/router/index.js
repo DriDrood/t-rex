@@ -23,6 +23,11 @@ const routes = [
     component: () => import('@/pages/lobby.vue')
   },
   {
+    path: '/halloffame',
+    name: 'halloffame',
+    component: () => import('@/pages/hallOfFame.vue')
+  },
+  {
     path: '/game',
     name: 'game',
     component: () => import('@/pages/game.vue')
