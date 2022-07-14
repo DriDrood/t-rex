@@ -11,6 +11,10 @@ import Trex from './objects/gameObjects/trex.js'
 import Nickname from './objects/gameObjects/nickname.js'
 import Cactus from './objects/gameObjects/cactus.js'
 import Score from './objects/gameObjects/score.js'
+import Bird from './objects/gameObjects/bird.js'
+import Ground from './objects/gameObjects/ground.js'
+import Cloud from './objects/gameObjects/cloud.js'
+import GameOver from './objects/gameObjects/gameOver.js'
 
 function start() {
   let players = store.state.players.map(player => player.nickname); // Load players from store
@@ -20,7 +24,16 @@ function start() {
   // Variables for game objects 
   let trexes = [];
   let nicknames = [];
+  let cactuses = [
+    new Cactus(550, 20, 'small', 0)
+  ];
   let scoreText = new Score(450, 135);
+  scoreText.prefix = 'Score: ';
+  scoreText.score = 5000;
+  let bird = new Bird(10, 100);
+  let ground = new Ground(0, 20);
+  let cloud = new Cloud(300, 100);
+  let gameOver = new GameOver(204, 130);
 
   for (let i = 0; i < players.length; i++) { // For each player create new trex (and nickname) next to the previous one
     let space = 100; // Make smaller in production
@@ -32,7 +45,12 @@ function start() {
   let objects = [
     ...trexes,
     ...nicknames,
-    scoreText
+    ...cactuses,
+    scoreText,
+    bird,
+    ground,
+    cloud,
+    gameOver,
   ];
 
   objects.forEach(object => object.update()); // Update all objects
@@ -41,7 +59,7 @@ function start() {
 
   trexes[3].position.y = 40;
   trexes[3].state = 'run';
-  scoreText.text = `Distance: 5000`;
+  trexes[2].state = 'crouch';
 
   render.renderAll(objects);
 }

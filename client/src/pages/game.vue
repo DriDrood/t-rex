@@ -53,4 +53,23 @@ export default {
   font-size: 8px;
 }
 
+/* game animations */
+
+.dead {
+  opacity: 0;
+  animation-name: dead;
+  animation-duration: 1s;
+}
+
+@keyframes dead {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-600px, -100px) rotate(-720deg);
+  }
+}
+
 </style>
