@@ -20,6 +20,7 @@ function start() {
   let players = store.state.players.map(player => player.nickname); // Load players from store
   let userNickname = store.state.user.nickname;
   console.log(`Players: ${players}`);
+  console.log(`User: ${userNickname}`);
 
   // Variables for game objects 
   let trexes = [];

@@ -5,7 +5,7 @@ export default createStore({
   state: {
     messages: [],
     user: {
-      nickname: '',
+      nickname: 'Acko',
       playerId: ''
     },
     lobbyId: '',

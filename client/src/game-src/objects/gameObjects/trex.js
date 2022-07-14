@@ -5,6 +5,7 @@ export default class Trex extends ImageGameObject {
     super();
     this.state = '';
     this.isUser = isUser;
+    this.render.properties.div.style = isUser ? 'opacity: 1;' : 'opacity: 0.5;';
     this.imgSrc = '/assets/game/trex/still.png';
     this.position = {x: x, y: y};
     this.player = player;
