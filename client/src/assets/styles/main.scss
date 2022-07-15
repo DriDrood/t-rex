@@ -7,6 +7,20 @@ $primary-font-color: #000;
   font-family: 'Press Start 2P', cursive;
 }
 
+img {
+  pointer-events: none
+}
+
+::selection {
+  color: none;
+  background: none;
+}
+/* For Mozilla Firefox */
+::-moz-selection {
+  color: none;
+  background: none;
+}
+
 .title2-primary {
   font-size: 60px;
   margin: 50px;
