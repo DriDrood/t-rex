@@ -1,8 +1,8 @@
 <template>
 
 <div class="player-list">
-  <div v-for="player in players" @click="kick(player)" :class="{ kickable: isMaster && !player.master }" class="btn player-item">
-    <img v-if="player.master" src="/assets/images/crown.svg" alt="Master crown"/>
+  <div v-for="player in players" @click="kick(player)" :class="{ kickable: isMaster && !player.isMaster }" class="btn player-item">
+    <img v-if="player.isMaster" src="/assets/images/crown.svg" alt="Master"/>
     <p>{{ player.nickname }}</p>
   </div>
 </div>
@@ -18,13 +18,11 @@ export default {
   name: 'playerList',
   computed: {
     ...mapState(['players', 'user']),
-  },
-  getters: {
     ...mapGetters(['isMaster'])
   },
   methods: {
     kick(player) {
-      if (!player.master) {
+      if (!player.isMaster) {
         console.log(`Kicked: ${player.nickname}`)
       }
     }
@@ -37,16 +35,17 @@ export default {
 <style lang="scss">
 
 .player-list {
-  width: 60%;
+  width: 80%;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .player-item {
-  height: 60px;
+  height: 50px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -58,6 +57,7 @@ export default {
     margin: 10px;
   }
   p {
+    font-size: 20px;
     padding: 5px;
   }
 }
