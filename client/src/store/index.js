@@ -1,15 +1,18 @@
 import { createStore } from 'vuex'
-const url = "http://54.37.72.116:8090"
+import router from "../router"
+import signalR from '@/signalR';
+// const url = "http://54.37.72.116:8090"
+const url = "";
 
 export default createStore({
   state: {
     messages: [],
     user: {
-      nickname: 'Acko',
+      nickname: '',
       playerId: ''
     },
     lobbyId: '',
-    players: [{nickname: 'Acko', isMaster: false}, {nickname: 'FreeRefill', isMaster: true}, {nickname: 'manLuke', isMaster: false}, {nickname: 'Dumba', isMaster: false}, {nickname: 'Squirrellegend', isMaster: false}],
+    players: [],
     hallOfFame: {
       players: [],
       count: 5
@@ -30,17 +33,15 @@ export default createStore({
         state.messages.shift();
       }, 5000)
     },
-    saveLobby: (state, payload) => {
+    afterCreateLobby: (state, payload) => {
+      state.lobbyId = payload.lobbyId;
+      state.user.playerId = payload.playerId;
+      state.user.nickname = payload.nickname;
+      state.players = [{ nickname: payload.nickname, isMaster: true }];
+    },
+    afterJoinLobby: (state, payload) => {
       state.lobbyId = payload.lobbyId
-      state.user.playerId = payload.playerId
-    },
-    setPlayerNickname (state, payload) {
       state.user.nickname = payload.nickname
-    },
-    setLobbyId (state, payload) {
-      state.user.playerId = payload.playerId
-    },
-    setPlayers: (state, payload) => {
       state.user.playerId = payload.playerId
       state.players = payload.players
     },
@@ -52,30 +53,35 @@ export default createStore({
   actions: {
     async createLobby({ state, commit }, newNickname) {
       try {
-        const response = await axios.post(`${url}/api/lobby`, { nickname: state.user.nickname })
-        commit('saveLobby', response.data)
-        commit('setPlayerNickname', { nickname: newNickname })
-        this.$router.push(`/lobby/${state.lobbyId}`)
+        const response = await axios.post(`${url}/api/lobby/create`, { nickname: newNickname })
+        commit('afterCreateLobby', { nickname: newNickname, ...response.data });
+        router.push(`/lobby/${state.lobbyId}`);
+        await signalR.connect();
       }
       catch (error) {
-        commit('displayInfo', { text: error.message, type: 'error' })
+        commit('displayInfo', { text: error.response.data, type: 'error' });
       }
     },
     async joinLobby({ state, commit }, payload) {
       try {
-        const response = await axios.post(`${url}/api/join`, { lobbyId: state.lobbyId, nickname: state.nickname })
-        commit('setplayers', response.data)
-        commit('setPlayerNickname', payload.nickname)
-        commit('setLobbyId', payload.lobbyId)
-        this.$router.push(`/lobby/${state.lobbyId}`)
+        const response = await axios.post(`${url}/api/lobby/join`, { lobbyId: payload.lobbyId, nickname: payload.nickname });
+        commit('afterJoinLobby', { lobbyId: payload.lobbyId, nickname: payload.nickname, ...response.data });
+        router.push(`/lobby/${state.lobbyId}`);
+        await signalR.connect();
       }
       catch (error) {
-        commit('displayInfo', { text: error.message, type: 'error' })
+        commit('displayInfo', { text: error.response.data, type: 'error' });
       }
     },
     async loadHallOfFame({ state, commit }, payload) {
-      const response = await axios.get(`${url}/api/HallOfFame/getTop?count=${payload??5}`)
-      commit('saveHallOfFame', response.data)
+      try
+      {
+        const response = await axios.get(`${url}/api/HallOfFame/getTop?count=${payload??5}`);
+        commit('saveHallOfFame', response.data);
+      }
+      catch (error) {
+        commit('displayInfo', { text: error.response.data, type: 'error' });
+      }
     },
   },
   modules: {

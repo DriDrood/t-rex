@@ -24,12 +24,10 @@ export default {
   },
   computed: {
     ...mapState(['players', 'user']),
+    ...mapGetters(['isMaster']),
     lobbyId() {
       return this.$route.params.lobbyId;
     }
-  },
-  getters: {
-    ...mapGetters(['isMaster'])
   },
   methods: {
     invite() {

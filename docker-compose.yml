@@ -6,6 +6,7 @@ services:
     restart: "${RESTART}"
     ports:
       - "80:80"
+      - "8088:81" # for DEV - send back out of container
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
@@ -14,8 +15,6 @@ services:
     build: server
     image: t-rex-multiplayer-server
     restart: "${RESTART}"
-    ports:
-      - "8090:80"
     environment:
       MYSQL_HOST: "db"
       MYSQL_PORT: "3306"

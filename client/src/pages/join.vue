@@ -17,19 +17,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 
 export default {
   name: 'join',
-  data() {
-    return {
+  data: () => ({
       nickname: '',
       lobbyId: '',
-    }
-  },
-  computed: {
-    ...mapState(['lobbyId']),
-  },
+  }),
   methods: {
     joinLobby() {
       this.$store.dispatch('joinLobby', { nickname: this.nickname, lobbyId: this.lobbyId })

@@ -13,16 +13,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 
 export default {
   name: 'host',
   data: () => ({
     nickname: '',
   }),
-  computed: {
-    ...mapState(['lobbyId']),
-  },
   methods: {
     createLobby() {
       this.$store.dispatch('createLobby', this.nickname);
