@@ -1,5 +1,5 @@
-import { createStore } from 'vuex'
-import router from "../router"
+import { createStore } from 'vuex';
+import router from "../router";
 import signalR from '@/signalR';
 // const url = "http://54.37.72.116:8090"
 const url = "";
@@ -45,6 +45,9 @@ export default createStore({
       state.user.playerId = payload.playerId
       state.players = payload.players
     },
+    onNewPlayerJoin: (state, payload) => {
+      state.players.push(payload);
+    },
     saveHallOfFame: (state, payload) => {
       // use only for action (setHallOfFame)
       state.hallOfFame.players = payload
@@ -56,9 +59,11 @@ export default createStore({
         const response = await axios.post(`${url}/api/lobby/create`, { nickname: newNickname })
         commit('afterCreateLobby', { nickname: newNickname, ...response.data });
         router.push(`/lobby/${state.lobbyId}`);
-        await signalR.connect();
+        await signalR.connect(response.data.playerId);
+        signalR.on('playerJoined', data => commit('onNewPlayerJoin', data));
       }
       catch (error) {
+        console.warn(error);
         commit('displayInfo', { text: error.response.data, type: 'error' });
       }
     },
@@ -67,9 +72,11 @@ export default createStore({
         const response = await axios.post(`${url}/api/lobby/join`, { lobbyId: payload.lobbyId, nickname: payload.nickname });
         commit('afterJoinLobby', { lobbyId: payload.lobbyId, nickname: payload.nickname, ...response.data });
         router.push(`/lobby/${state.lobbyId}`);
-        await signalR.connect();
+        await signalR.connect(response.data.playerId);
+        signalR.on('playerJoined', data => commit('onNewPlayerJoin', data));
       }
       catch (error) {
+        console.warn(error);
         commit('displayInfo', { text: error.response.data, type: 'error' });
       }
     },
@@ -80,6 +87,7 @@ export default createStore({
         commit('saveHallOfFame', response.data);
       }
       catch (error) {
+        console.warn(error);
         commit('displayInfo', { text: error.response.data, type: 'error' });
       }
     },

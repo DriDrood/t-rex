@@ -4,10 +4,13 @@ const connection = new signalR.HubConnectionBuilder()
   .build();
 
 export default {
-  async connect() {
+  async connect(playerId) {
     try {
       await connection.start();
       console.log("SignalR Connected.");
+      if (playerId) {
+        this.invoke("joinGame", playerId);
+      }
     } catch (err) {
       console.log(err);
       setTimeout(this.connect, 5000);
