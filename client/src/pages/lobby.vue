@@ -6,7 +6,7 @@
   <button @click="invite" class="btn primary-button">Invite players</button>
 
   <playerList/>
-  <button v-if="isMaster">Start Game</button>
+  <button v-if="isMaster" class="btn primary-button">Start Game</button>
 </div>
 
 </template>

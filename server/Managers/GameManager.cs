@@ -47,7 +47,7 @@ public class GameManager
     {
         foreach (var obstacle in Map.Obstacles)
         {
-            if (Math.Pow((obstacle.Position.X- player.Position.X),2)+ Math.Pow((obstacle.Position.Y- player.Position.Y),2) < Math.Pow((obstacle.Type.CollisionRadius+ player.trex.collisionRadius),2))
+            if (Math.Pow((obstacle.Position.X- player.Position.X),2)+ Math.Pow((obstacle.Position.Y- player.Position.Y),2) < Math.Pow((obstacle.Type.CollisionRadius+ player.Trex.collisionRadius),2))
             {
                 player.Score = CurrentScore;
                 break;

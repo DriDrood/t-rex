@@ -31,10 +31,10 @@ public class GameHub : Hub
             return;
         }
 
-        player.keyDownPressed = keys.Down;
-        player.keyUpPressed = keys.Up;
-        player.keyLeftPressed = keys.Left;
-        player.keyRightPressed = keys.Right;
+        player.KeyDownPressed = keys.Down;
+        player.KeyUpPressed = keys.Up;
+        player.KeyLeftPressed = keys.Left;
+        player.KeyRightPressed = keys.Right;
     }
 
     public async Task JoinGame(Guid playerId)
@@ -54,7 +54,7 @@ public class GameHub : Hub
         }
 
         player.ConnectionId = Context.ConnectionId;
-        await Clients.Group(lobby.Id.ToString()).SendAsync("playerJoined", new PlayerJoinedOut { Nickname = player.name });
+        await Clients.Group(lobby.Id.ToString()).SendAsync("playerJoined", new PlayerJoinedOut { Nickname = player.Nickname });
         await Groups.AddToGroupAsync(Context.ConnectionId, lobby.Id.ToString());
     }
 
@@ -75,8 +75,36 @@ public class GameHub : Hub
         }
 
         lobby.DeletePlayer(player);
-        await Clients.Group(lobby.Id.ToString()).SendAsync("playerLeft", new PlayerJoinedOut { Nickname = player.name });
+        await Clients.Group(lobby.Id.ToString()).SendAsync("playerLeft", new PlayerJoinedOut { Nickname = player.Nickname });
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, lobby.Id.ToString());
+    }
+
+    public async Task KickPlayer(string nickname)
+    {
+        Lobby lobby = LobbyController.Lobbies.Values.FirstOrDefault(l => l.Players.Any(p => p.ConnectionId == Context.ConnectionId));
+        if (lobby == null)
+        {
+            await Clients.Caller.SendAsync("error", new ErrorOut { Code = "noLobby", Message = "Invalid lobbyId" });
+            return;
+        }
+        
+        Player me = lobby.Players.FirstOrDefault(p => p.ConnectionId == Context.ConnectionId);
+        if (me == null || lobby.Master != me)
+        {
+            await Clients.Caller.SendAsync("error", new ErrorOut { Code = "notMaster", Message = "You has to be master to kick player" });
+            return;
+        }
+
+        Player player = lobby.Players.FirstOrDefault(p => p.Nickname == nickname);
+        if (player == null)
+        {
+            await Clients.Caller.SendAsync("error", new ErrorOut { Code = "notConnected", Message = "Player is not connected" });
+            return;
+        }
+
+        lobby.DeletePlayer(player);
+        await Clients.Group(lobby.Id.ToString()).SendAsync("playerLeft", new PlayerJoinedOut { Nickname = player.Nickname });
+        await Groups.RemoveFromGroupAsync(player.ConnectionId, lobby.Id.ToString());
     }
 
     public async Task StartGame()

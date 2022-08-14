@@ -23,6 +23,11 @@ const routes = [
     component: () => import('@/pages/lobby.vue')
   },
   {
+    path: '/kicked',
+    name: 'kicked',
+    component: () => import('@/pages/kicked.vue')
+  },
+  {
     path: '/halloffame',
     name: 'halloffame',
     component: () => import('@/pages/hallOfFame.vue')

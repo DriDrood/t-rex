@@ -29,7 +29,7 @@ public class LobbyController : Controller
         if (!Lobbies.TryGetValue(param.LobbyId, out Lobby lobby))
             return BadRequest("Wrong lobbyId");
 
-        if (lobby.Players.Any(p => p.name == param.Nickname))
+        if (lobby.Players.Any(p => p.Nickname == param.Nickname))
             return BadRequest("Player name is already taken");
 
         Player player = new Player(param.Nickname);
@@ -41,7 +41,7 @@ public class LobbyController : Controller
             Players = lobby.Players
                 .Select(p => new JoinOutPlayer
                 {
-                    Nickname = p.name,
+                    Nickname = p.Nickname,
                     IsMaster = lobby.Master.Id == p.Id
                 })
                 .ToArray()

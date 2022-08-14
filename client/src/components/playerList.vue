@@ -1,11 +1,12 @@
 <template>
 
-<div class="player-list">
-  <div v-for="player in players" @click="kick(player)" :class="{ kickable: isMaster && !player.isMaster }" class="btn player-item">
-    <img v-if="player.isMaster" src="/assets/images/crown.svg" alt="Master"/>
-    <p>{{ player.nickname }}</p>
+  <div class="player-list">
+    <div v-for="player in players" @click="kick(player)" :class="{ kickable: isMaster && !player.isMaster }"
+      class="btn player-item">
+      <img v-if="player.isMaster" src="/assets/images/crown.svg" alt="Master" />
+      <p>{{ player.nickname }}</p>
+    </div>
   </div>
-</div>
 
 </template>
 
@@ -22,9 +23,12 @@ export default {
   },
   methods: {
     kick(player) {
-      if (!player.isMaster) {
-        console.log(`Kicked: ${player.nickname}`)
+      if (player.isMaster) {
+        return;
       }
+
+      console.log(`Kicked: ${player.nickname}`);
+      this.$store.dispatch('kickPlayer', player.nickname);
     }
   }
 }
@@ -33,7 +37,6 @@ export default {
 
 
 <style lang="scss">
-
 .player-list {
   width: 80%;
   display: flex;
@@ -51,11 +54,12 @@ export default {
   justify-content: center;
   align-items: center;
   margin: 25px;
-   
+
   img {
     width: 50px;
     margin: 10px;
   }
+
   p {
     font-size: 20px;
     padding: 5px;

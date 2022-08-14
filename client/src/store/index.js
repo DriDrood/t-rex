@@ -49,6 +49,14 @@ export default createStore({
       state.players.push(payload);
     },
     onPlayerLeft: (state, payload) => {
+      if (payload.nickname == state.user.nickname) {
+        router.push('/kicked');
+        state.user = { nickname: '', playerId: '' };
+        state.players = [];
+        state.lobbyId = '';
+        return;
+      }
+
       state.players = state.players.filter(p => p.nickname != payload.nickname);
     },
     saveHallOfFame: (state, payload) => {
@@ -84,6 +92,9 @@ export default createStore({
         console.warn(error);
         commit('displayInfo', { text: error.response.data, type: 'error' });
       }
+    },
+    kickPlayer(state, payload) {
+      signalR.invoke('kickPlayer', payload);
     },
     async loadHallOfFame({ state, commit }, payload) {
       try
