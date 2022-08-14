@@ -6,7 +6,7 @@
   <button @click="invite" class="btn primary-button">Invite players</button>
 
   <playerList/>
-  <button v-if="isMaster" class="btn primary-button">Start Game</button>
+  <button v-if="me?.isMaster" class="btn primary-button">Start Game</button>
 </div>
 
 </template>
@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     ...mapState(['players', 'user']),
-    ...mapGetters(['isMaster']),
+    ...mapGetters(['me']),
     lobbyId() {
       return this.$route.params.lobbyId;
     }

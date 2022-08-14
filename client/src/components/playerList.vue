@@ -1,8 +1,7 @@
 <template>
 
   <div class="player-list">
-    <div v-for="player in players" @click="kick(player)" :class="{ kickable: isMaster && !player.isMaster }"
-      class="btn player-item">
+    <div v-for="(player, id) in players" @click="kick(player, id)" :class="{ kickable: kickable(player) }" class="btn player-item">
       <img v-if="player.isMaster" src="/assets/images/crown.svg" alt="Master" />
       <p>{{ player.nickname }}</p>
     </div>
@@ -19,16 +18,19 @@ export default {
   name: 'playerList',
   computed: {
     ...mapState(['players', 'user']),
-    ...mapGetters(['isMaster'])
+    ...mapGetters(['me']),
+    kickable() {
+      return player => this.me?.isMaster && !player.isMaster;
+    }
   },
   methods: {
-    kick(player) {
-      if (player.isMaster) {
+    kick(player, id) {
+      if (!this.kickable(player)) {
         return;
       }
 
       console.log(`Kicked: ${player.nickname}`);
-      this.$store.dispatch('kickPlayer', player.nickname);
+      this.$store.dispatch('kickPlayer', id);
     }
   }
 }

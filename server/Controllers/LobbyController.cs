@@ -38,13 +38,13 @@ public class LobbyController : Controller
         return Ok(new JoinOut
         {
             PlayerId = player.Id,
-            Players = lobby.Players
-                .Select(p => new JoinOutPlayer
-                {
-                    Nickname = p.Nickname,
-                    IsMaster = lobby.Master.Id == p.Id
-                })
-                .ToArray()
+            Players = lobby.Players.ToDictionary(
+                    p => p.Id,
+                    p => new JoinOutPlayer
+                    {
+                        Nickname = p.Nickname,
+                        IsMaster = lobby.Master.Id == p.Id
+                    }),
         });
     }
 

@@ -54,7 +54,7 @@ public class GameHub : Hub
         }
 
         player.ConnectionId = Context.ConnectionId;
-        await Clients.Group(lobby.Id.ToString()).SendAsync("playerJoined", new PlayerJoinedOut { Nickname = player.Nickname });
+        await Clients.Group(lobby.Id.ToString()).SendAsync("playerJoined", new PlayerJoinedOut { PlayerId = player.Id, Nickname = player.Nickname });
         await Groups.AddToGroupAsync(Context.ConnectionId, lobby.Id.ToString());
     }
 
@@ -75,11 +75,11 @@ public class GameHub : Hub
         }
 
         lobby.DeletePlayer(player);
-        await Clients.Group(lobby.Id.ToString()).SendAsync("playerLeft", new PlayerJoinedOut { Nickname = player.Nickname });
+        await Clients.Group(lobby.Id.ToString()).SendAsync("playerLeft", new PlayerLeftOut { PlayerId = player.Id });
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, lobby.Id.ToString());
     }
 
-    public async Task KickPlayer(string nickname)
+    public async Task KickPlayer(Guid playerId)
     {
         Lobby lobby = LobbyController.Lobbies.Values.FirstOrDefault(l => l.Players.Any(p => p.ConnectionId == Context.ConnectionId));
         if (lobby == null)
@@ -95,7 +95,7 @@ public class GameHub : Hub
             return;
         }
 
-        Player player = lobby.Players.FirstOrDefault(p => p.Nickname == nickname);
+        Player player = lobby.Players.FirstOrDefault(p => p.Id == playerId);
         if (player == null)
         {
             await Clients.Caller.SendAsync("error", new ErrorOut { Code = "notConnected", Message = "Player is not connected" });
@@ -103,7 +103,7 @@ public class GameHub : Hub
         }
 
         lobby.DeletePlayer(player);
-        await Clients.Group(lobby.Id.ToString()).SendAsync("playerLeft", new PlayerJoinedOut { Nickname = player.Nickname });
+        await Clients.Group(lobby.Id.ToString()).SendAsync("playerLeft", new PlayerLeftOut { PlayerId = player.Id });
         await Groups.RemoveFromGroupAsync(player.ConnectionId, lobby.Id.ToString());
     }
 

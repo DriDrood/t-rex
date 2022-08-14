@@ -7,69 +7,63 @@ const url = "";
 export default createStore({
   state: {
     messages: [],
-    user: {
-      nickname: '',
-      playerId: ''
-    },
-    lobbyId: '',
-    players: [],
+    playerId: null,
+    lobbyId: null,
+    players: {},
     hallOfFame: {
       players: [],
       count: 5
     },
   },
   getters: {
-    getHallOfFame: (state) => {
-      return state.hallOfFame
-    },
-    isMaster: (state) => {
-      return state.players.find(player => player.isMaster)?.nickname == state.user.nickname
-    }
+    me: state => state.players[state.playerId],
   },
   mutations: {
     displayInfo: (state, payload) => {
       state.messages.push(payload);
-      setTimeout(() => {
-        state.messages.shift();
-      }, 5000)
+      setTimeout(() => state.messages.shift(), 5000)
     },
     afterCreateLobby: (state, payload) => {
       state.lobbyId = payload.lobbyId;
-      state.user.playerId = payload.playerId;
-      state.user.nickname = payload.nickname;
-      state.players = [{ nickname: payload.nickname, isMaster: true }];
+      state.playerId = payload.playerId;
+      state.players[payload.playerId] = {
+        nickname: payload.nickname,
+        isMaster: true,
+      };
     },
     afterJoinLobby: (state, payload) => {
-      state.lobbyId = payload.lobbyId
-      state.user.nickname = payload.nickname
-      state.user.playerId = payload.playerId
-      state.players = payload.players
+      state.lobbyId = payload.lobbyId;
+      state.playerId = payload.playerId;
+      state.players = payload.players;
+    },
+    afterLoadHallOfFame: (state, payload) => {
+      state.hallOfFame.players = payload
     },
     onNewPlayerJoin: (state, payload) => {
-      state.players.push(payload);
+      state.players[payload.playerId] = {
+        nickname: payload.nickname,
+      };
     },
     onPlayerLeft: (state, payload) => {
-      if (payload.nickname == state.user.nickname) {
+      if (payload.playerId == state.playerId) {
         router.push('/kicked');
-        state.user = { nickname: '', playerId: '' };
-        state.players = [];
-        state.lobbyId = '';
+        state.lobbyId = null;
+        state.playerId = null;
+        state.players = {};
         return;
       }
 
-      state.players = state.players.filter(p => p.nickname != payload.nickname);
+      delete state.players[payload.playerId];
     },
-    saveHallOfFame: (state, payload) => {
-      // use only for action (setHallOfFame)
-      state.hallOfFame.players = payload
-    }
   },
   actions: {
     async createLobby({ state, commit }, newNickname) {
       try {
-        const response = await axios.post(`${url}/api/lobby/create`, { nickname: newNickname })
+        const response = await axios.post(`${url}/api/lobby/create`, { nickname: newNickname });
         commit('afterCreateLobby', { nickname: newNickname, ...response.data });
+
         router.push(`/lobby/${state.lobbyId}`);
+
         await signalR.connect(response.data.playerId);
         signalR.on('playerJoined', data => commit('onNewPlayerJoin', data));
         signalR.on('playerLeft', data => commit('onPlayerLeft', data));
@@ -82,8 +76,10 @@ export default createStore({
     async joinLobby({ state, commit }, payload) {
       try {
         const response = await axios.post(`${url}/api/lobby/join`, { lobbyId: payload.lobbyId, nickname: payload.nickname });
-        commit('afterJoinLobby', { lobbyId: payload.lobbyId, nickname: payload.nickname, ...response.data });
+        commit('afterJoinLobby', { ...payload, ...response.data });
+
         router.push(`/lobby/${state.lobbyId}`);
+
         await signalR.connect(response.data.playerId);
         signalR.on('playerJoined', data => commit('onNewPlayerJoin', data));
         signalR.on('playerLeft', data => commit('onPlayerLeft', data));
@@ -100,7 +96,7 @@ export default createStore({
       try
       {
         const response = await axios.get(`${url}/api/HallOfFame/getTop?count=${payload??5}`);
-        commit('saveHallOfFame', response.data);
+        commit('afterLoadHallOfFame', response.data);
       }
       catch (error) {
         console.warn(error);
