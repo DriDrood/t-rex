@@ -48,6 +48,9 @@ export default createStore({
     onNewPlayerJoin: (state, payload) => {
       state.players.push(payload);
     },
+    onPlayerLeft: (state, payload) => {
+      state.players = state.players.filter(p => p.nickname != payload.nickname);
+    },
     saveHallOfFame: (state, payload) => {
       // use only for action (setHallOfFame)
       state.hallOfFame.players = payload
@@ -61,6 +64,7 @@ export default createStore({
         router.push(`/lobby/${state.lobbyId}`);
         await signalR.connect(response.data.playerId);
         signalR.on('playerJoined', data => commit('onNewPlayerJoin', data));
+        signalR.on('playerLeft', data => commit('onPlayerLeft', data));
       }
       catch (error) {
         console.warn(error);
@@ -74,6 +78,7 @@ export default createStore({
         router.push(`/lobby/${state.lobbyId}`);
         await signalR.connect(response.data.playerId);
         signalR.on('playerJoined', data => commit('onNewPlayerJoin', data));
+        signalR.on('playerLeft', data => commit('onPlayerLeft', data));
       }
       catch (error) {
         console.warn(error);

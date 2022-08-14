@@ -10,6 +10,11 @@ public class GameHub : Hub
 {
     private static Dictionary<string, GameManager> _games = new();
 
+    public override Task OnDisconnectedAsync(Exception exception)
+    {
+        return LeaveGame();
+    }
+
     public async Task KeyPressed(KeysIn keys)
     {
         Lobby lobby = LobbyController.Lobbies.Values.FirstOrDefault(l => l.Players.Any(p => p.ConnectionId == Context.ConnectionId));
