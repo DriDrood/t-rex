@@ -25,7 +25,9 @@ public class Lobby
         // empty
         if (!Players.Any())
         {
-            throw new NotImplementedException("remove lobby");
+            trex.Controllers.LobbyController.Lobbies.Remove(Id);
+            // log: Lobby ends
+            return;
         }
 
         if (Master.Id == player.Id)
