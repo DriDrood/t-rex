@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import router from "../router";
+import axios from '@/axios';
 import signalR from '@/signalR';
 // const url = "http://54.37.72.116:8090"
 const url = "";
@@ -58,28 +59,16 @@ export default createStore({
   },
   actions: {
     async createLobby({ state, commit }, newNickname) {
-      try {
-        const response = await axios.post(`${url}/api/lobby/create`, { nickname: newNickname });
-        commit('afterCreateLobby', { nickname: newNickname, ...response.data });
+      const data = await axios.post(commit, `${url}/api/lobby/create`, { nickname: newNickname });
+      commit('afterCreateLobby', { nickname: newNickname, ...data });
 
-        router.push(`/lobby/${state.lobbyId}`);
-      }
-      catch (error) {
-        console.warn(error);
-        commit('displayInfo', { text: error.response.data, type: 'error' });
-      }
+      router.push(`/lobby/${state.lobbyId}`);
     },
     async joinLobby({ state, commit }, payload) {
-      try {
-        const response = await axios.post(`${url}/api/lobby/join`, { lobbyId: payload.lobbyId, nickname: payload.nickname });
-        commit('afterJoinLobby', { ...payload, ...response.data });
+      const data = await axios.post(commit, `${url}/api/lobby/join`, { lobbyId: payload.lobbyId, nickname: payload.nickname });
+      commit('afterJoinLobby', { ...payload, ...data });
 
-        router.push(`/lobby/${state.lobbyId}`);
-      }
-      catch (error) {
-        console.warn(error);
-        commit('displayInfo', { text: error.response.data, type: 'error' });
-      }
+      router.push(`/lobby/${state.lobbyId}`);
     },
     async startGame() {
       signalR.invoke('startGame');
@@ -89,20 +78,15 @@ export default createStore({
       signalR.on('playerJoined', data => commit('onNewPlayerJoin', data));
       signalR.on('playerLeft', data => commit('onPlayerLeft', data));
       signalR.on('gameStarted', () => router.push('/game'));
+      // signalR.on('tick');
+      // signalR.on('gameEnded');
     },
     kickPlayer(state, payload) {
       signalR.invoke('kickPlayer', payload);
     },
     async loadHallOfFame({ state, commit }, payload) {
-      try
-      {
-        const response = await axios.get(`${url}/api/HallOfFame/getTop?count=${payload??5}`);
-        commit('afterLoadHallOfFame', response.data);
-      }
-      catch (error) {
-        console.warn(error);
-        commit('displayInfo', { text: error.response.data, type: 'error' });
-      }
+      const data = await axios.get(commit, `${url}/api/HallOfFame/getTop?count=${payload ?? 5}`);
+      commit('afterLoadHallOfFame', data);
     },
   },
   modules: {
