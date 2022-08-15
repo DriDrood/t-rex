@@ -18,7 +18,11 @@ export default {
   },
   async invoke(method, payload) {
     try {
-      await connection.invoke(method, payload);
+      if (payload) {
+        await connection.invoke(method, payload);
+      } else {
+        await connection.invoke(method);
+      }
     } catch (err) {
       console.error(err);
     }

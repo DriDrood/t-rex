@@ -6,7 +6,7 @@
   <button @click="invite" class="btn primary-button">Invite players</button>
 
   <playerList/>
-  <button v-if="me?.isMaster" class="btn primary-button">Start Game</button>
+  <button v-if="me?.isMaster" @click="start" class="btn primary-button">Start Game</button>
 </div>
 
 </template>
@@ -33,8 +33,14 @@ export default {
     invite() {
       navigator.clipboard.writeText(`${window.location.origin}/join/${this.lobbyId}`);
       this.$store.commit('displayInfo', {type: 'info', text: 'Invite link copied to clipboard'});
-    }
-  }
+    },
+    start() {
+      this.$store.dispatch('startGame');
+    },
+  },
+  mounted() {
+    this.$store.dispatch('onEntryLobby');
+  },
 }
 
 </script>

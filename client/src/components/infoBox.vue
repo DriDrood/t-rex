@@ -1,7 +1,7 @@
 <template>
 
 <div class="info-box-main">
-  <div v-for="message in messages" class="info-box" :class="{ 'info-info': message.type == 'info', 'info-success': message.type == 'success', 'info-warning': message.type == 'warn', 'info-error': message.type == 'error'}">
+  <div v-for="message in messages" class="info-box" :class="`info-${message.type}`">
     <p>{{ message.text }}</p>
   </div>
 </div>
@@ -54,7 +54,7 @@ export default {
   border: 4px solid green;
 }
 
-.info-warning {
+.info-warn {
   color: orange;
   border: 4px solid orange;
 }

@@ -63,10 +63,6 @@ export default createStore({
         commit('afterCreateLobby', { nickname: newNickname, ...response.data });
 
         router.push(`/lobby/${state.lobbyId}`);
-
-        await signalR.connect(response.data.playerId);
-        signalR.on('playerJoined', data => commit('onNewPlayerJoin', data));
-        signalR.on('playerLeft', data => commit('onPlayerLeft', data));
       }
       catch (error) {
         console.warn(error);
@@ -79,15 +75,20 @@ export default createStore({
         commit('afterJoinLobby', { ...payload, ...response.data });
 
         router.push(`/lobby/${state.lobbyId}`);
-
-        await signalR.connect(response.data.playerId);
-        signalR.on('playerJoined', data => commit('onNewPlayerJoin', data));
-        signalR.on('playerLeft', data => commit('onPlayerLeft', data));
       }
       catch (error) {
         console.warn(error);
         commit('displayInfo', { text: error.response.data, type: 'error' });
       }
+    },
+    async startGame() {
+      signalR.invoke('startGame');
+    },
+    async onEntryLobby({ state, commit }) {
+      await signalR.connect(state.playerId);
+      signalR.on('playerJoined', data => commit('onNewPlayerJoin', data));
+      signalR.on('playerLeft', data => commit('onPlayerLeft', data));
+      signalR.on('gameStarted', () => router.push('/game'));
     },
     kickPlayer(state, payload) {
       signalR.invoke('kickPlayer', payload);
