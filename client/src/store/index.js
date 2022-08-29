@@ -78,7 +78,6 @@ export default createStore({
       signalR.on('playerJoined', data => commit('onNewPlayerJoin', data));
       signalR.on('playerLeft', data => commit('onPlayerLeft', data));
       signalR.on('gameStarted', () => router.push('/game'));
-      // signalR.on('tick');
       // signalR.on('gameEnded');
     },
     kickPlayer(state, payload) {
