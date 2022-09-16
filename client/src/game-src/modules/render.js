@@ -6,7 +6,7 @@ export class RenderModule {
       el: {},
     }
   }
-  update() {}
+  renderUpdate() {}
 }
 
 export default {
