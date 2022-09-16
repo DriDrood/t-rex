@@ -27,14 +27,15 @@ img {
 }
 
 .btn {
-  font-size: 25px;
   border: solid black 4px;
+  color: #000000;
   background-color: transparent;
 }
 
 .primary-button {
   height: 80px;
   width: 250px;
+  font-size: 25px;
   cursor: pointer;
   transition: all 0.3s;
   &:hover {

@@ -4,7 +4,7 @@
 
     <h1 class="main-title">T-rex Multiplayer</h1>
 
-    <div class="main-buttons primary-input-gap ">
+    <div class="main-buttons">
       <button @click="this.$router.push('/join')" class="btn primary-button">Join</button>
       <button @click="this.$router.push('/host')" class="btn primary-button">Host</button>
     </div>
@@ -28,7 +28,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style>
 .main-main {
   display: flex;
   flex-direction: column;
@@ -41,5 +41,25 @@ export default {
 .main-title {
   font-size: 80px;
   margin: 50px;
+}
+
+.main-buttons {
+  display: flex; flex-direction: row;
+  gap: 100px;
+}
+
+/* Mobile/Tablet support */
+
+@media screen and (max-width: 900px) {
+  .main-title {
+    font-size: 8vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .main-buttons {
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 </style>

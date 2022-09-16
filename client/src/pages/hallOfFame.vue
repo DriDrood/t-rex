@@ -68,4 +68,23 @@ export default {
   justify-content: space-between;
 }
 
+@media screen and (max-width: 900px) {
+  .hall-page-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    button {
+      margin: 15px;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .hall-page-scoreboard {
+    width: 80%;
+  }
+}
+
 </style>

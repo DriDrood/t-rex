@@ -1,6 +1,6 @@
 <template>
-<div class="main-kicked">
-  <h1 class="title2-primary">You were kicked from the lobby!</h1>
+<div class="kicked-main">
+  <h1 class="kicked-title">You were kicked from the lobby!</h1>
   <button @click="this.$router.push('/')" class="btn primary-button">Return to home</button>
 </div>
 </template>
@@ -8,19 +8,23 @@
 <script>
 
 export default {
-  name: 'notFound',
-  data: () => ({
-    message: ''
-  }),
+  name: 'kicked',
 }
 
 </script>
 
 <style>
-.main-kicked {
+.kicked-main {
+  height: 100%;
+  gap: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
+
+/* Mobile/Tablet support */
+
+
 </style>

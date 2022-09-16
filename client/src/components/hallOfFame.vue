@@ -10,7 +10,7 @@
         <p>{{ player.score }}</p>
       </div>
     </div>
-    <button @click="this.$router.push('/halloffame')" class="hall-button">Show more</button>
+    <button @click="this.$router.push('/halloffame')" class="btn hall-button">Show more</button>
   </div>
 
 </template>
