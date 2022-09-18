@@ -8,7 +8,7 @@ export default {
       this.send();
     }
     document.onkeyup = ({key}) => { // When key is released remove it from array
-      this.pressedKeys.splice(pressedKeys.indexOf(key), 1);
+      this.pressedKeys.splice(this.pressedKeys.indexOf(key), 1);
       this.send();
     }
   },
