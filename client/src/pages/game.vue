@@ -1,25 +1,11 @@
 <template>
 
-<!-- <p>isPortraitMode: {{ isPortraitMode }}</p> -->
-
-<!-- Mobile version -->
-<div v-if="isMobileBrowser" class="game-mobile">
-
-  
-
-  <div id="game" class="game">
-    <!-- Objects will be insterted here -->
-  </div>
-
-  <div class="game-mobile-popup">
-    <h1>Please rotate your phone!</h1>
-    <img src="/assets/game/mobile/rotate.png">
-  </div>
-
+<div v-if="isMobileBrowser" class="game-mobile-popup">
+  <h1>Please rotate your phone!</h1>
+  <img src="/assets/game/mobile/rotate.png">
 </div>
 
-<!-- Desktop version -->
-<div v-else class="game-desktop">
+<div class="game-container">
   <div id="game" class="game">
     <!-- Objects will be insterted here -->
   </div>
@@ -33,13 +19,7 @@ import game from '@/game-src/gameMain.js'
 
 export default {
   name: 'game',
-  data: () => ({
-    screenOrientation: "",
-    screenWidth: window.outerWidth,
-    screenHeight: window.outerHeight,
-  }),
   mounted() {
-
     game.mountDiv('game');
     game.start(); // Start the game (Has to be last in mounted())
   },
@@ -57,9 +37,9 @@ export default {
 
 <style>
 
-/* Desktop and mobile */
+/* Layout */
 
-.game-mobile, .game-desktop {
+.game-mobile-popup, .game-container {
   height: 100%;
   width: 100%;
   display: flex; flex-direction: column;
@@ -67,7 +47,7 @@ export default {
   align-items: center;
 }
 
-/* Mobile */
+/* Mobile popup*/
 
 .game-mobile-popup {
   display: none;
@@ -92,11 +72,15 @@ export default {
   }
 }
 
+/* Mobile input  */
+
 .game-mobile-input {
 
 }
 
-/* Game (Both mobile and desktop) */
+
+
+/* Game */
 
 .game {
   width: 600px;
